@@ -1,0 +1,20 @@
+Generated Data	| time 		 | file_weight
+------------------------------------------------
+7k records	| real: 0m0.029s |	
+		| user: 0m0.025s | 7kData.txt
+		| sys :	0m0.004s | 233K
+------------------------------------------------
+70k records     | real: 0m0.089s |
+                | user: 0m0.073s | 70kData.txt
+                | sys : 0m0.016s | 2.3M
+------------------------------------------------
+700k records    | real: 0m0.679s |
+                | user: 0m0.631s | 700kData.txt
+                | sys : 0m0.048s | 23M
+------------------------------------------------
+7M records      | real: 0m6.536s |
+                | user: 0m6.072s | 7MData.txt
+                | sys : 0m0.464s | 227M
+
+
+
