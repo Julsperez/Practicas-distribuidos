@@ -17,7 +17,7 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 		msj.requestId = id;
 		id++;
 		memcpy(msj.IP, IP, 16);
-		cout << "msj.ip " << msj.IP << endl;
+		// cout << "msj.ip " << msj.IP << endl;
 		msj.puerto = puerto;
 		msj.operationId = operationId;
 		//cout << "Id operacion: " << msj.operationId << endl;
@@ -33,9 +33,9 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 		resultado = paq1.obtieneDatos();
 	//}
 	if(res>=0)
-		cout << "OK" << endl;
+		cout << "Respuesta obtenida" << endl;
 	else
-		cout << "No se pudo conectar al servidor :(" << endl;
+		cout << "Sin conexion con el servidor" << endl;
 
 	return resultado;
 }

@@ -1,4 +1,4 @@
-#include "Solicitud.h"
+#include "./dependencies/Solicitud.h"
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
@@ -11,10 +11,15 @@ int main(int argc, char*argv[]) {
 	int puerto;
 	int operacion = 1;
 
+	if(argc != 4){
+		printf("Forma de uso: programa ip_server port_server data_file\n");
+		exit(0);
+	}  
+
 	FILE *archivo = NULL;
-	archivo = fopen("votos.txt","r+");
+	archivo = fopen(argv[3],"r+");
 	if (archivo == NULL) {
-		printf("%s\n", "No se pudo abrir el archivo votos.txt (CLIENTE)");
+		printf("%s\n", "App error: No se pudo abrir el archivo fuente");
 	}
 
 	ip =argv[1];
@@ -28,7 +33,7 @@ int main(int argc, char*argv[]) {
 	fclose(archivo);
 	cout<<arreglo<<endl;
 	Solicitud cliente;
-	printf("La respuesta del servidor es : %s\n", cliente.doOperation(ip, puerto, operacion, arreglo));
+	printf("Servidor: %s\n", cliente.doOperation(ip, puerto, operacion, arreglo));
 
 	return 0;
 }
