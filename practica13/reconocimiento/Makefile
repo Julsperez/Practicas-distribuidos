@@ -1,5 +1,7 @@
 Servidor: Servidor.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o
 	g++ Servidor.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o -o Servidor
+Servidor2: Servidor2.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o
+	g++ Servidor2.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o -o Servidor2
 Cliente: Cliente.cpp Solicitud.o SocketDatagrama.o PaqueteDatagrama.o
 	g++ Cliente.cpp Solicitud.o SocketDatagrama.o PaqueteDatagrama.o -o Cliente
 Respuesta.o: ./dependencies/Respuesta.cpp ./dependencies/Respuesta.h
@@ -11,4 +13,4 @@ SocketDatagrama.o: ./dependencies/SocketDatagrama.cpp ./dependencies/SocketDatag
 PaqueteDatagrama.o: ./dependencies/PaqueteDatagrama.cpp  ./dependencies/PaqueteDatagrama.h
 	g++ ./dependencies/PaqueteDatagrama.cpp -c
 clear:
-	rm *.o Servidor Cliente
+	rm *.o Servidor Cliente Servidor2
