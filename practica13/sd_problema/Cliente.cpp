@@ -11,6 +11,12 @@ int main(int argc, char*argv[]) {
 	int puerto;
 	int operacion = 1;
 
+	ip =argv[1];
+	cout << ip << endl;
+	puerto = atoi(argv[2]);
+
+	Solicitud cliente;
+
 	if(argc != 4){
 		printf("Forma de uso: programa ip_server port_server data_file\n");
 		exit(0);
@@ -22,17 +28,10 @@ int main(int argc, char*argv[]) {
 		printf("%s\n", "App error: No se pudo abrir el archivo fuente");
 	}
 
-	ip =argv[1];
-	cout << ip << endl;
-	puerto = atoi(argv[2]);
-
-	//memcpy(val1, argv[3], sizeof(argv[3]));
-	//memcpy(val2, argv[4], sizeof(argv[4]));
 	fgets(arreglo,100,archivo);
 	fflush(archivo);
 	fclose(archivo);
 	cout<<arreglo<<endl;
-	Solicitud cliente;
 	printf("Servidor: %s\n", cliente.doOperation(ip, puerto, operacion, arreglo));
 
 	return 0;
