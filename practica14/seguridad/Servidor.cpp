@@ -63,18 +63,18 @@ int main(int argc, char const *argv[]) {
   					if(votes.empty()){
 	  					votes.push_back(msj.arguments);
 
-						fflush(archivo);
-	  					strcpy(timeBuffer,seconds.c_str());
-						fputs(timeBuffer,archivo);
 						// fflush(archivo);
-						strcpy(timeBuffer,useconds.c_str());
-						fputs(timeBuffer,archivo);
+	  			// 		strcpy(timeBuffer,seconds.c_str());
+						// fputs(timeBuffer,archivo);
+						// // fflush(archivo);
+						// strcpy(timeBuffer,useconds.c_str());
+						// fputs(timeBuffer,archivo);
 						
-						fflush(archivo);
-						fputs(" ",archivo);
-						fputs(msj.arguments,archivo);
+						// fflush(archivo);
+						// fputs(" ",archivo);
+						// fputs(msj.arguments,archivo);
 
-						fsync(archivo)
+						// fsync((long int)archivo);
 	  				} 
 	  				else{
 	  					// cp arguments aux
@@ -106,7 +106,7 @@ int main(int argc, char const *argv[]) {
 						fflush(archivo);
 						fputs(" ",archivo);
 						fputs(msj.arguments,archivo);
-						fsync(archivo)			
+						fsync((long int)archivo);			
   					}
 
 					fclose(archivo);
