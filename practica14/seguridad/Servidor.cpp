@@ -1,30 +1,33 @@
 #include <cstdlib>
 #include <iostream>
-#include <string>
-#include "./dependencies/Respuesta.h"
 #include <stdlib.h>
-#include <vector>
+#include <string>
 #include <sys/time.h>
+#include <unistd.h>
+#include <vector>
+#include "./dependencies/Respuesta.h"
 
 using namespace std;
 
-struct timeval timeNow;
+// struct timeval timeNow;
 
-struct timeval getTimeOfDay() {
-	struct timeval timestamp;
-	return timestamp;	
-}
+// struct timeval getTimeOfDay() {
+// 	struct timeval timestamp;
+// 	return timestamp;	
+// }
 
 int main(int argc, char const *argv[]) {
+	
+	char confirmacion[] = "Vote registered, thank you!";
+	long int expected =0, prev = -1;
+	
+	std::vector<string> votes;
+
 	struct timeval timeout;
 	timeout.tv_sec = 100;
 	timeout.tv_usec = 500000;
-	long int expected =0, prev = -1;
 
 	Respuesta respuesta(atoi(argv[1]),timeout);
-	char confirmacion[] = "Registro guardado en bd servidor.";
-	
-	std::vector<string> v;
 
 	while(1) {
 		struct mensaje msj;
@@ -33,11 +36,11 @@ int main(int argc, char const *argv[]) {
 	 	FILE *archivo = NULL;
 	  	archivo = fopen(argv[2], "a+");
 	  	if (archivo == NULL) {
-	    	cout << "Server error: No se encontro el archivo " << argv[2] << endl;
+	    	cout << "Server error: No such file or directory " << argv[2] << endl;
 	    	break;
 	  	}
   
-		cout << "\nEscuchando: "<< expected << ":"<< endl;
+		cout << "\nListening: "<< expected << ":"<< endl;
 	  	//Request info
 		memcpy(&msj, respuesta.getRequest(), sizeof(struct mensaje));
 
@@ -47,93 +50,67 @@ int main(int argc, char const *argv[]) {
 		switch(msj.operationId) {
 			case 1:
 				if(msj.requestId == expected){
+					bool exist = false;
+					char timeBuffer[64];
+
+					// getting the timestamp
 					struct timeval tv;
     				gettimeofday(&tv,NULL);
-					//const char *time_datails = NULL;
-					//struct timeval aux;
-					//struct tm *nowtm;
-					// char tmbuf[64];
-					char tmbuf2[64];
-					//aux.tv_usec = getTimeOfDay().tv_usec;
-					//cout << aux.tv_usec;
-					//nowtm = localtime(&aux.tv_usec);
-					//size_t sz = strftime(tmbuf, sizeof tmbuf, "%Y-%m-%d %H:%M:%S", nowtm);
-					//sprintf(tmbuf,"%lu",sz);
-					// string s = tmbuf;
-					//strcat(msj.arguments,s);
-					string segundos = std::to_string(tv.tv_sec);
-					string microsec = std::to_string(tv.tv_usec);
-	
-					// char linea[1024];
-					bool existe = false;
-					// string copia;
-					// int count_aux = 0;
-    				// for (int i = 0; i < strlen(msj.arguments); i++) { 
-       	// 				copia = copia + msj.arguments[i]; 
-    				// }
-    				
-    				// FILE *f = fopen(argv[2], "w+");
-  					// if (f == NULL) {
-    					// cout << "Error al abrir el archivo (SERVIDOR)" << endl;
-  					// }
-
+					string seconds = std::to_string(tv.tv_sec);
+					string useconds = std::to_string(tv.tv_usec);
 
 					
-  					if(v.empty()) {
-	  					v.push_back(msj.arguments);
-	  					strcpy(tmbuf2,segundos.c_str());
-						fflush(archivo);
-						fputs(tmbuf2,archivo);
-						cout << "writing: " << tmbuf2 <<endl;
+  					if(votes.empty()){
+	  					votes.push_back(msj.arguments);
 
-						// fflush(archivo);
-						strcpy(tmbuf2,microsec.c_str());
 						fflush(archivo);
-						fputs(tmbuf2,archivo);
-						cout << "writing-2: " << tmbuf2 <<endl;
+	  					strcpy(timeBuffer,seconds.c_str());
+						fputs(timeBuffer,archivo);
+						// fflush(archivo);
+						strcpy(timeBuffer,useconds.c_str());
+						fputs(timeBuffer,archivo);
 						
 						fflush(archivo);
 						fputs(" ",archivo);
 						fputs(msj.arguments,archivo);
 
+						fsync(archivo)
 	  				} 
-	  				else {
+	  				else{
 	  					// cp arguments aux
 	  					string aux;
 	  					for (int i = 0; i < strlen(msj.arguments); i++)
 	       					aux = aux + msj.arguments[i];
 
-	       				// instead of binary_search
-	  					for (std::size_t i = 0; i < v.size(); i++) {
-	  						if(aux.substr(18,27) == v[i].substr(18,27)){
-	  							igual = v[i].substr(1,16);
-	  							existe = true;
+	       				// instead of binary_search, search over phone number
+	       				cout << ":---------------Debug secction: ----------- " <<endl;
+	       				cout << "votes size: " << votes.size() <<endl;
+	  					for (std::size_t i = 0; i < votes.size(); i++) {
+	  						// phone number
+	  						if(aux.substr(18,27) == votes[i].substr(18,27)){
+	  							cout << votes[i].substr(0,15)<<endl;
+	  							igual = votes[i].substr(1,16);
+	  							cout << igual <<endl;
+	  							exist = true;
 	  							break;
 	  						}
 	  					}
 	  				}
 
-
-  					if(existe == false) {
-						strcpy(tmbuf2,segundos.c_str());
+  					if(exist == false){
 						fflush(archivo);
-						fputs(tmbuf2,archivo);
-  						cout << "writing: " << tmbuf2 <<endl;
-						// cout << tmbuf2 <<endl;
-						strcpy(tmbuf2,microsec.c_str());
-						fflush(archivo);
-						fputs(tmbuf2,archivo);
-						cout << "writing-2: " << tmbuf2 <<endl;
-						// cout << tmbuf2 <<endl; 
-						// fflush(archivo);
+	  					strcpy(timeBuffer,seconds.c_str());
+						fputs(timeBuffer,archivo);
+						strcpy(timeBuffer,useconds.c_str());
+						fputs(timeBuffer,archivo);
 						fflush(archivo);
 						fputs(" ",archivo);
-						fputs(msj.arguments,archivo);				
+						fputs(msj.arguments,archivo);
+						fsync(archivo)			
   					}
-					
+
 					fclose(archivo);
 				
-
 					prev = expected;
 					expected++;
 

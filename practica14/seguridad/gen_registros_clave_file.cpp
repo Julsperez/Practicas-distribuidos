@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <iterator>
-
+#include <time.h>
 #include <algorithm>    // std::random_shuffle
 #include <vector>       // std::vector
 #include <cstdlib>      // std::rand, std::srand
@@ -24,6 +24,7 @@ struct registro{
 };
 
 int main(int argc, char *argv[]){
+	srand(time(NULL));
 	char telefono[11], curp[19], t[11], sexo;
 	int i, n, destino, j, opcion, inicial, elemento;;
 	struct registro reg1;
