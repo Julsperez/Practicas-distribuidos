@@ -1,9 +1,0 @@
-A) Tiempo de procesamiento de 10 000 votos: 17 segundos
-B) Sin validar que este repetido: 15 segundos
-
-1) No es posible debido que para procesar los 70 millones de botos se necesitaria alrededor de 33 horas o 119000 segundo
-2)	5000	tiempo: 8.77 segundos	->	570 en 1 segundo
-	10000 	tiempo: 17 segundos		->	588 en 1 segundo
-	20000	tiempo: 32.75 segundos	->	610 en 1 segundo
-	En 10 peticiones mas cada segundo.
-	
