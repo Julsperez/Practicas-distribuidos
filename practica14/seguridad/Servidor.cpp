@@ -52,6 +52,7 @@ int main(int argc, char const *argv[]) {
 		// const string zeros = "0000000000000000";
 	  	// string igual = zeros;
 		cout << "requestId: " << msj.requestId << endl;
+		cout << "operationId: " << msj.operationId << endl;
 		switch(msj.operationId) {
 			case 1:
 				m1.messageType = 1;
@@ -71,22 +72,22 @@ int main(int argc, char const *argv[]) {
   					record.push_back(msj.arguments);
   					string phone = record[0].substr(0, 9);
 
-  					cout << "DEBUGER: ******************" <<endl;
-  					cout << "phone: "<< phone <<endl;
-  					cout << "phonebook:\n" << endl; 
-  					for(auto i : phonebook) 
-  						cout << i <<"\n"<<endl;
-  					cout << "----end phonebook ---" << endl; 
-  					cout << "exist?: " << binary_search(phonebook.begin(), phonebook.end(), phone) << endl;
-  					cout << "******* end DEBUGER ***********" <<endl;
+  					// cout << "DEBUGER: ******************" <<endl;
+  					// cout << "phone: "<< phone <<endl;
+  					// cout << "phonebook:\n" << endl; 
+  					// for(auto i : phonebook) 
+  					// 	cout << i <<"\n"<<endl;
+  					// cout << "----end phonebook ---" << endl; 
+  					// cout << "exist?: " << binary_search(phonebook.begin(), phonebook.end(), phone) << endl;
+  					// cout << "******* end DEBUGER ***********" <<endl;
 
   					exist = binary_search(phonebook.begin(), phonebook.end(), phone);
 
-  					if( !exist || phonebook.empty()){
+  					if( exist == false || phonebook.empty()){
   						if(phonebook.empty()) {
   							cout << "pushme its my first time" <<endl; 
   						}else {
-  							cout << "Not first and not duplicated" <<endl; 
+  							cout << "Not first and NOT DUPLICATED" <<endl; 
   						}
   						phonebook.push_back(phone);
 						// phonebook.push_back(phone);
@@ -106,58 +107,27 @@ int main(int argc, char const *argv[]) {
 						memcpy(m1.arguments, confirm, strlen(confirm)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
   					}
-						// phoneNums.push_back(cpArgs[0].substr(0,9));
 
-  					else if(binary_search(phonebook.begin(), phonebook.end(), phone)){
-  						cout << "WATCHOUT Duplicated" <<endl; 
+  					else{
   						// send reply duplicated
+  						cout << "WATCHOUT Duplicated" <<endl; 
 						memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
   					}
-
-					else{ // if (exist == false )
-						// cout << "Not first and not duplicated" <<endl; 
-						// phonebook.push_back(phone);
-						// record.clear();
-	  			// 		// votes.push_back(msj.arguments);
-						// fflush(dbFile);
-	  			// 		strcpy(timeBuffer,seconds.c_str());
-						// fputs(timeBuffer,dbFile);
-						// strcpy(timeBuffer,useconds.c_str());
-						// fputs(timeBuffer,dbFile);
-						// fflush(dbFile);
-						// fputs(" ",dbFile);
-						// fputs(msj.arguments,dbFile);
-						// fsync((long int)dbFile);
-						// fclose(dbFile);			
-  					
-						// memcpy(m1.arguments, confirm, strlen(confirm)+1);
-						// response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-
-					}
-						prev = expected;
-						expected++;
+					expected++;
 				}
 
-				else if(msj.requestId == prev) {
-
+				else if(msj.requestId != expected) {
+					cout << "WEIRDO :P " << endl;
 					fclose(dbFile);
-					cout << "Already registered " << endl;
-					memcpy(m1.arguments, weird, strlen(weird)+1);
-					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-
-				} else {
-					fclose(dbFile);
-					cout << "Action ignored" << endl;
 					memcpy(m1.arguments, weird, strlen(weird)+1);
 					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
 				}
-
-
 				break;
 
 			default:
 				cout << "Server error: No such operationId: " << msj.operationId  << ", ignored."<< endl;
+
 		} // end switch
 
 	} // end while

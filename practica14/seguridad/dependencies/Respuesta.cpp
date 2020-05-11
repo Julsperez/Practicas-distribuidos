@@ -26,5 +26,5 @@ void Respuesta::sendReply(char * respuesta, char * ipCliente, int puertoCliente)
 	m1 = (struct mensaje *) respuesta;
 	PaqueteDatagrama paq((char*) m1, 100, ipCliente, puertoCliente);
 	socketlocal->envia(paq);
-	cout<<"Vote registered\n";
+	cout<<"Request answered...\n";
 }
