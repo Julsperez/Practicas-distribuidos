@@ -62,79 +62,95 @@ struct timeval getTimeOfDay(){
 }
 
 int main(int argc, char const *argv[]) {
-	long int idEsperado =0, idAnterior = -1;
-	struct TrieNode *root = getNode();
-	int flag=0;
-	struct timeval timeout;
-  	timeout.tv_sec = 100;
-  	timeout.tv_usec = 500000;
-  	std::vector<string> v;
-	Respuesta respuesta(atoi(argv[1]),timeout);
-  	char confirmacion[] = "Registro guardado en bd servidor.";
-  	FILE *f = fopen(argv[2], "w");
-	if (f==NULL) {
-		cout << "error al abrir el archivo (w) " << argv[2] << endl;
-		exit(-1);
-	}
-	fclose(f);
-	while(1) {
-	struct mensaje msj;
-  	struct mensaje m1;
-  
+	
+	char confirm[] = "Vote registered, thank you!";
+	char duplicated[] = "Duplicated: 0000000000000000";
+	char weird[] = "Weirdo!";
+	long int expected = 0, prev = -1;
+	bool exist = false;
 
-  	string igual = "0000000000000000";
-	cout << "\nEsperando conexion : " << endl;
-	cout << "Se espera recibir id mensaje: " << idEsperado << endl;
-	memcpy(&msj, respuesta.getRequest(), sizeof(struct mensaje));
+	std::vector<string> record;
+	std::vector<string> phonebook;
+
+	struct timeval timeout;
+	timeout.tv_sec = 100;
+	timeout.tv_usec = 500000;
+
+	Respuesta response(atoi(argv[1]),timeout);
+
+	while(1) {
+		struct mensaje msj;
+	 	struct mensaje m1;
+
+	 	FILE *dbFile = NULL;
+	  	dbFile = fopen(argv[2], "a+");
+	  	if (dbFile == NULL) {
+	    	cout << "Server error: No such file or directory " << argv[2] << endl;
+	    	break;
+	  	}
+  
+		cout << "\nListening: "<< expected << ":"<< endl;
+	  	//Request info
+		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
+
+		// const string zeros = "0000000000000000";
+	  	// string igual = zeros;
+		cout << "requestId: " << msj.requestId << endl;
+		cout << "operationId: " << msj.operationId << endl;
 		switch(msj.operationId) {
 			case 1:
-				if(msj.requestId == idEsperado){
+				m1.messageType = 1;
+				m1.puerto = msj.puerto;
+				m1.requestId = msj.requestId;
+				memcpy(m1.IP, msj.IP, 16);
+
+				if(msj.requestId == expected){
+					char timeBuffer[64];
+
+					// getting the timestamp
 					struct timeval tv;
     				gettimeofday(&tv,NULL);
-					//const char *time_datails = NULL;
-					//struct timeval aux;
-					//struct tm *nowtm;
-					
-					char tmbuf[64];
-					char tmbuf2[64];
-					//aux.tv_usec = getTimeOfDay().tv_usec;
-					//cout << aux.tv_usec;
-					//nowtm = localtime(&aux.tv_usec);
-					//size_t sz = strftime(tmbuf, sizeof tmbuf, "%Y-%m-%d %H:%M:%S", nowtm);
-					//sprintf(tmbuf,"%lu",sz);
-					string s = tmbuf;
-					//strcat(msj.arguments,s);
-					string segundos = std::to_string(tv.tv_sec);
-					string microsec = std::to_string(tv.tv_usec);
-	
-					char linea[1024];
-					bool existe = false;
-					string copia;
-					int count_aux = 0;
-    				for (int i = 0; i < strlen(msj.arguments); i++) { 
-       					copia = copia + msj.arguments[i]; 
-    				}
-    				
-    				FILE *f = fopen(argv[2], "w+");
+					string seconds = std::to_string(tv.tv_sec);
+					string useconds = std::to_string(tv.tv_usec);
+
+  					record.push_back(msj.arguments);
+  					string phone = record[0].substr(0, 9);
+
+  					// cout << "DEBUGER: ******************" <<endl;
+  					// cout << "phone: "<< phone <<endl;
+  					// cout << "phonebook:\n" << endl; 
+  					// for(auto i : phonebook) 
+  					// 	cout << i <<"\n"<<endl;
+  					// cout << "----end phonebook ---" << endl; 
+  					// cout << "exist?: " << binary_search(phonebook.begin(), phonebook.end(), phone) << endl;
+  					// cout << "******* end DEBUGER ***********" <<endl;
+
+  					exist = binary_search(phonebook.begin(), phonebook.end(), phone);
+
+  					if( exist == false || phonebook.empty()){
+  						if(phonebook.empty()) {
+  							cout << "pushme its my first time" <<endl; 
+  						}else {
+  							cout << "Not first and NOT DUPLICATED" <<endl; 
+  						}
+  						phonebook.push_back(phone);
+						// phonebook.push_back(phone);
+						record.clear();
+	  					// votes.push_back(msj.arguments);
+						fflush(dbFile);
+	  					strcpy(timeBuffer,seconds.c_str());
+						fputs(timeBuffer,dbFile);
+						strcpy(timeBuffer,useconds.c_str());
+						fputs(timeBuffer,dbFile);
+						fflush(dbFile);
+						fputs(" ",dbFile);
+						fputs(msj.arguments,dbFile);
+						fsync((long int)dbFile);
+						fclose(dbFile);			
   					
-  					if (f == NULL) {
-    					cout << "Error al abrir el archivo (SERVIDOR)" << endl;
-  					}				
-  					if(v.empty()){
-	  					v.push_back(msj.arguments);
-	  					strcpy(tmbuf2,segundos.c_str());
-						fflush(f);
-						fputs(tmbuf2,f);
-						cout << tmbuf2 <<endl;
-						fflush(f);
-						strcpy(tmbuf2,microsec.c_str());
-						fflush(f);
-						cout << tmbuf2 <<endl; 
-						fputs(tmbuf2,f);
-						fflush(f);
-						fputs(" ",f);
-						fputs(msj.arguments,f);
-	  				}
+						memcpy(m1.arguments, confirm, strlen(confirm)+1);
+						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+  					}
 	  				else{
 	  					string aux;
 	  					for (int i = 0; i < strlen(msj.arguments); i++) {
