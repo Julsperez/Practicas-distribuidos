@@ -42,7 +42,7 @@ int main(int argc, char const *argv[]) {
 	    	break;
 	  	}
   
-		cout << "\nListening: "<< expected << ":"<< endl;
+		// cout << "\nListening: "<< expected << ":"<< endl;
 	  	//Request info
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
@@ -82,14 +82,14 @@ int main(int argc, char const *argv[]) {
 					fclose(dbFile);			
 					memcpy(m1.arguments, confirm, strlen(confirm)+1);
 					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-					cout << "Request answered successfully." <<endl;
+					// cout << "Request answered successfully." <<endl;
   					
 
 					expected++;
 				}
 
 				else if(msj.requestId != expected) {
-					cout << "WEIRDO :P " << endl;
+					// cout << "WEIRDO :P " << endl;
 					fclose(dbFile);
 					memcpy(m1.arguments, weird, strlen(weird)+1);
 					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);

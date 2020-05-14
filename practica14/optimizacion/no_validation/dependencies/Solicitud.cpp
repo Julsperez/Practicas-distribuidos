@@ -30,7 +30,7 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 		msj.operationId = operationId;
 		fgets(msj.arguments, 100, f);
 		
-		cout<<"\nArguments:" << msj.arguments;
+		// cout<<"\nArguments:" << msj.arguments;
 
 		PaqueteDatagrama paq((char*) &msj, sizeof(msj), IP, puerto);
 		socketlocal->envia(paq);
@@ -38,7 +38,7 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 		res = socketlocal->recibeTimeout(paq1,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
 		if(res>=0){
 			resultado  = paq1.obtieneDatos();
-			cout << resultado << endl;
+			// cout << resultado << endl;
 			id++;
 		} else {
 			cout << "Server error, forwarding message..." << endl;
