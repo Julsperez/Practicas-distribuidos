@@ -88,16 +88,11 @@ int main(int argc, char const *argv[]) {
 					expected++;
 				}
 
-				else if(msj.requestId != expected) {
-					// cout << "WEIRDO :P " << endl;
-					fclose(dbFile);
-					memcpy(m1.arguments, weird, strlen(weird)+1);
-					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-				}
 				break;
 
 			default:
-				cout << "Server error: No such operationId: " << msj.operationId  << ", fowarding."<< endl;
+				continue;
+				// cout << "Server error: No such operationId: " << msj.operationId  << ", fowarding."<< endl;
 
 		} // end switch
 

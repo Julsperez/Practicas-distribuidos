@@ -41,14 +41,14 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 			// cout << resultado << endl;
 			id++;
 		} else {
-			cout << "Server error, forwarding message..." << endl;
+			// cout << "Server error, forwarding message..." << endl;
 			while (1) {
 				PaqueteDatagrama paqReenvio((char*)&msj, sizeof(msj), IP, puerto);
 				socketlocal->envia(paqReenvio);
 				PaqueteDatagrama acuse(sizeof(msj));
 				res = socketlocal->recibeTimeout(acuse,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
 				if(res >0 ){
-					cout << "Forward: " << acuse.obtieneDatos() << endl;
+					// cout << "Forward: " << acuse.obtieneDatos() << endl;
 					break;
 				}
 			}
