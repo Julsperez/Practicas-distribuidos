@@ -1,5 +1,6 @@
 #include <algorithm>    // std::binary_search, std::sort
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -19,8 +20,7 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
 	
-	char confirm[] = "Vote registered, thank you!";
-	char duplicated[] = "Duplicated: 0000000000000000";
+	char duplicated[] = "Vote duplicated, timestamp: 0:0";
 	char weird[] = "Weirdo!";
 	long int expected = 0, prev = -1;
 	bool exist = false;
@@ -49,10 +49,8 @@ int main(int argc, char const *argv[]) {
 	  	//Request info
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
-		// const string zeros = "0000000000000000";
-	  	// string igual = zeros;
-		cout << "requestId: " << msj.requestId << endl;
-		cout << "operationId: " << msj.operationId << endl;
+		// cout << "requestId: " << msj.requestId << endl;
+		// cout << "operationId: " << msj.operationId << endl;
 		switch(msj.operationId) {
 			case 1:
 				m1.messageType = 1;
@@ -63,11 +61,16 @@ int main(int argc, char const *argv[]) {
 				if(msj.requestId == expected){
 					char timeBuffer[64];
 
-					// getting the timestamp
+					// making the timestamp
 					struct timeval tv;
     				gettimeofday(&tv,NULL);
 					string seconds = std::to_string(tv.tv_sec);
 					string useconds = std::to_string(tv.tv_usec);
+					string timestamp = seconds + ':' + useconds;
+					string message = "Vote registered, timestamp: " + timestamp;
+
+					char confirm[message.size()+1];
+					strcpy(confirm, message.c_str());
 
   					record.push_back(msj.arguments);
   					string phone = record[0].substr(0, 9);
@@ -84,15 +87,8 @@ int main(int argc, char const *argv[]) {
   					exist = binary_search(phonebook.begin(), phonebook.end(), phone);
 
   					if( exist == false || phonebook.empty()){
-  						if(phonebook.empty()) {
-  							cout << "pushme its my first time" <<endl; 
-  						}else {
-  							cout << "Not first and NOT DUPLICATED" <<endl; 
-  						}
   						phonebook.push_back(phone);
-						// phonebook.push_back(phone);
 						record.clear();
-	  					// votes.push_back(msj.arguments);
 						fflush(dbFile);
 	  					strcpy(timeBuffer,seconds.c_str());
 						fputs(timeBuffer,dbFile);
@@ -103,14 +99,14 @@ int main(int argc, char const *argv[]) {
 						fputs(msj.arguments,dbFile);
 						fsync((long int)dbFile);
 						fclose(dbFile);			
-  					
 						memcpy(m1.arguments, confirm, strlen(confirm)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+						cout << "Request answered successfully." <<endl; 
   					}
 
   					else{
   						// send reply duplicated
-  						cout << "WATCHOUT Duplicated" <<endl; 
+  						cout << "This phone number is already written." <<endl; 
 						memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
   					}

@@ -14,10 +14,10 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 	char aux[100];
 	unsigned int id, registros = atoi(arguments);
 	
-	cout << "Registros: " << registros << endl;
+	cout << "Votes to send: " << registros << endl;
 	FILE *f = fopen("votes.txt", "r+");
 	if (f==NULL) {
-		cout << "Error al abrir el archivo de votos" << endl;
+		cout << "Client error, no such file or directory" << endl;
 		exit(-1);
 	}
 
@@ -30,7 +30,7 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 		msj.operationId = operationId;
 		fgets(msj.arguments, 100, f);
 		
-		cout<<"Arguments:" << msj.arguments;
+		cout<<"\nArguments:" << msj.arguments;
 
 		PaqueteDatagrama paq((char*) &msj, sizeof(msj), IP, puerto);
 		socketlocal->envia(paq);
@@ -41,14 +41,14 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 			cout << resultado << endl;
 			id++;
 		} else {
-			cout << "Server error, reenviado paquete..." << endl;
+			cout << "Server error, forwarding message..." << endl;
 			while (1) {
 				PaqueteDatagrama paqReenvio((char*)&msj, sizeof(msj), IP, puerto);
 				socketlocal->envia(paqReenvio);
 				PaqueteDatagrama acuse(sizeof(msj));
 				res = socketlocal->recibeTimeout(acuse,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
 				if(res >0 ){
-					cout << "Reenvio: " << acuse.obtieneDatos() << endl;
+					cout << "Forward: " << acuse.obtieneDatos() << endl;
 					break;
 				}
 			}
