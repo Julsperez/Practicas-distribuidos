@@ -18,6 +18,7 @@ using namespace std;
 // 	return timestamp;	
 // }
 
+
 int main(int argc, char const *argv[]) {
 	
 	char duplicated[] = "Vote duplicated, timestamp: 0:0";
@@ -73,22 +74,14 @@ int main(int argc, char const *argv[]) {
 					strcpy(confirm, message.c_str());
 
   					record.push_back(msj.arguments);
-  					string phone = record[0].substr(0, 9);
+  					string phone_number = record[0].substr(0, 10);
 
-  					// cout << "DEBUGER: ******************" <<endl;
-  					// cout << "phone: "<< phone <<endl;
-  					// cout << "phonebook:\n" << endl; 
-  					// for(auto i : phonebook) 
-  					// 	cout << i <<"\n"<<endl;
-  					// cout << "----end phonebook ---" << endl; 
-  					// cout << "exist?: " << binary_search(phonebook.begin(), phonebook.end(), phone) << endl;
-  					// cout << "******* end DEBUGER ***********" <<endl;
-
-  					exist = binary_search(phonebook.begin(), phonebook.end(), phone);
-
-  					if( exist == false || phonebook.empty()){
-  						phonebook.push_back(phone);
-						record.clear();
+  					// Can be commented
+  					if (phonebook.empty()) {
+  						cout << "First vote! " << endl;
+  						phonebook.push_back(phone_number);
+  						record.clear();
+  						// writeFile(FILE * dbFile, char * msj.arguments);
 						fflush(dbFile);
 	  					strcpy(timeBuffer,seconds.c_str());
 						fputs(timeBuffer,dbFile);
@@ -101,14 +94,36 @@ int main(int argc, char const *argv[]) {
 						fclose(dbFile);			
 						memcpy(m1.arguments, confirm, strlen(confirm)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						cout << "Request answered successfully." <<endl; 
-  					}
+						cout << "Request answered successfully." <<endl;
+  					} else {
+						sort(phonebook.begin(), phonebook.end());
+						cout << "Searching for "<< phone_number << endl;
+						if (binary_search(phonebook.begin(), phonebook.end(), phone_number)) {
+							exist = true;
+							record.clear();
+	  						cout << "This phone number is already written." <<endl; 
+							memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
+							response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+						} else {
+							exist = false;
+							phonebook.push_back(phone_number);
+							record.clear();
+							fflush(dbFile);
+		  					strcpy(timeBuffer,seconds.c_str());
+							fputs(timeBuffer,dbFile);
+							strcpy(timeBuffer,useconds.c_str());
+							fputs(timeBuffer,dbFile);
+							fflush(dbFile);
+							fputs(" ",dbFile);
+							fputs(msj.arguments,dbFile);
+							fsync((long int)dbFile);
+							fclose(dbFile);			
+							memcpy(m1.arguments, confirm, strlen(confirm)+1);
+							response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+							cout << "Request answered successfully." <<endl;
+						}
+						
 
-  					else{
-  						// send reply duplicated
-  						cout << "This phone number is already written." <<endl; 
-						memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
-						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
   					}
 					expected++;
 				}
@@ -122,11 +137,11 @@ int main(int argc, char const *argv[]) {
 				break;
 
 			default:
-				cout << "Server error: No such operationId: " << msj.operationId  << ", ignored."<< endl;
+				cout << "Server error: No such operationId: " << msj.operationId  << ", fowarding."<< endl;
 
 		} // end switch
 
-	} // end while
+	} // end while,
 
 	return 0;
 } // end main
