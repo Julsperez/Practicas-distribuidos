@@ -78,7 +78,7 @@ int main(int argc, char const *argv[]) {
 
   					// Can be commented
   					if (phonebook.empty()) {
-  						cout << "First vote! " << endl;
+  						// cout << "First vote! " << endl;
   						phonebook.push_back(phone_number);
   						record.clear();
   						// writeFile(FILE * dbFile, char * msj.arguments);
@@ -94,14 +94,14 @@ int main(int argc, char const *argv[]) {
 						fclose(dbFile);			
 						memcpy(m1.arguments, confirm, strlen(confirm)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						cout << "Request answered successfully." <<endl;
+						// cout << "Request answered successfully." <<endl;
   					} else {
 						sort(phonebook.begin(), phonebook.end());
-						cout << "Searching for "<< phone_number << endl;
+						// cout << "Searching for "<< phone_number << endl;
 						if (binary_search(phonebook.begin(), phonebook.end(), phone_number)) {
 							exist = true;
 							record.clear();
-	  						cout << "This phone number is already written." <<endl; 
+	  						// cout << "This phone number is already written." <<endl; 
 							memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
 							response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
 						} else {
@@ -120,7 +120,7 @@ int main(int argc, char const *argv[]) {
 							fclose(dbFile);			
 							memcpy(m1.arguments, confirm, strlen(confirm)+1);
 							response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-							cout << "Request answered successfully." <<endl;
+							// cout << "Request answered successfully." <<endl;
 						}
   					}
 					expected++;
