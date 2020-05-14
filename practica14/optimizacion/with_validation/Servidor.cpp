@@ -46,7 +46,7 @@ int main(int argc, char const *argv[]) {
 	    	break;
 	  	}
   
-		cout << "\nListening: "<< expected << ":"<< endl;
+		// cout << "\nListening: "<< expected << ":"<< endl;
 	  	//Request info
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
