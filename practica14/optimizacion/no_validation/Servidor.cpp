@@ -24,10 +24,6 @@ int main(int argc, char const *argv[]) {
 	char duplicated[] = "Vote duplicated, timestamp: 0:0";
 	char weird[] = "Weirdo!";
 	long int expected = 0, prev = -1;
-	bool exist = false;
-
-	std::vector<string> record;
-	std::vector<string> phonebook;
 
 	struct timeval timeout;
 	timeout.tv_sec = 100;
@@ -73,56 +69,22 @@ int main(int argc, char const *argv[]) {
 					char confirm[message.size()+1];
 					strcpy(confirm, message.c_str());
 
-  					record.push_back(msj.arguments);
-  					string phone_number = record[0].substr(0, 10);
 
-  					// Can be commented
-  					if (phonebook.empty()) {
-  						cout << "First vote! " << endl;
-  						phonebook.push_back(phone_number);
-  						record.clear();
-  						// writeFile(FILE * dbFile, char * msj.arguments);
-						fflush(dbFile);
-	  					strcpy(timeBuffer,seconds.c_str());
-						fputs(timeBuffer,dbFile);
-						strcpy(timeBuffer,useconds.c_str());
-						fputs(timeBuffer,dbFile);
-						fflush(dbFile);
-						fputs(" ",dbFile);
-						fputs(msj.arguments,dbFile);
-						fsync((long int)dbFile);
-						fclose(dbFile);			
-						memcpy(m1.arguments, confirm, strlen(confirm)+1);
-						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						cout << "Request answered successfully." <<endl;
-  					} else {
-						sort(phonebook.begin(), phonebook.end());
-						cout << "Searching for "<< phone_number << endl;
-						if (binary_search(phonebook.begin(), phonebook.end(), phone_number)) {
-							exist = true;
-							record.clear();
-	  						cout << "This phone number is already written." <<endl; 
-							memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
-							response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						} else {
-							exist = false;
-							phonebook.push_back(phone_number);
-							record.clear();
-							fflush(dbFile);
-		  					strcpy(timeBuffer,seconds.c_str());
-							fputs(timeBuffer,dbFile);
-							strcpy(timeBuffer,useconds.c_str());
-							fputs(timeBuffer,dbFile);
-							fflush(dbFile);
-							fputs(" ",dbFile);
-							fputs(msj.arguments,dbFile);
-							fsync((long int)dbFile);
-							fclose(dbFile);			
-							memcpy(m1.arguments, confirm, strlen(confirm)+1);
-							response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-							cout << "Request answered successfully." <<endl;
-						}
-  					}
+					fflush(dbFile);
+  					strcpy(timeBuffer,seconds.c_str());
+					fputs(timeBuffer,dbFile);
+					strcpy(timeBuffer,useconds.c_str());
+					fputs(timeBuffer,dbFile);
+					fflush(dbFile);
+					fputs(" ",dbFile);
+					fputs(msj.arguments,dbFile);
+					fsync((long int)dbFile);
+					fclose(dbFile);			
+					memcpy(m1.arguments, confirm, strlen(confirm)+1);
+					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+					cout << "Request answered successfully." <<endl;
+  					
+
 					expected++;
 				}
 
