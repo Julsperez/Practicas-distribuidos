@@ -1,4 +1,5 @@
 #include <algorithm>    // std::binary_search, std::sort
+#include <bits/stdc++.h> // TrieNode struct 
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -11,18 +12,28 @@
 
 using namespace std;
 
+const int PHONE_SIZE = 10;
+
+struct TrieNode {
+	struct TrieNode *children[PHONE_SIZE];
+	bool isWord;
+};
+
+struct TrieNode *getNode();
+void insert(struct TrieNode *, string);
+bool search(struct TrieNode *, string);
+
 int main(int argc, char const *argv[]) {
-	
 	char duplicated[] = "Vote duplicated, timestamp: 0:0";
 	long int expected = 0;
 	bool exist = false;
-
-	std::vector<string> record;
-	std::vector<string> phonebook;
+	vector <string> record;
 
 	struct timeval timeout;
 	timeout.tv_sec = 100;
 	timeout.tv_usec = 500000;
+
+	struct TrieNode *root = getNode();
 
 	Respuesta response(atoi(argv[1]),timeout);
 
@@ -38,7 +49,6 @@ int main(int argc, char const *argv[]) {
 	  	}
   
 		// cout << "\nListening: "<< expected << ":"<< endl;
-	  	//Request info
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
 		// cout << "requestId: " << msj.requestId << endl;
@@ -51,24 +61,27 @@ int main(int argc, char const *argv[]) {
 				memcpy(m1.IP, msj.IP, 16);
 
 				if(msj.requestId == expected){
-					struct timeval tv;
-    				gettimeofday(&tv,NULL);
-					string seconds = std::to_string(tv.tv_sec);
-					string useconds = std::to_string(tv.tv_usec);
-					string timestamp = seconds + ':' + useconds;
-					string message = "Vote registered, timestamp: " + timestamp;
-					char timeBuffer[64];
-					char confirm[message.size()+1];
-					strcpy(confirm, message.c_str());
-
   					record.push_back(msj.arguments);
   					string phone_number = record[0].substr(0, 10);
 					record.clear();
 
-  					if (phonebook.empty() || exist == false) {
-  						// cout << "First vote! " << endl;
-  						phonebook.push_back(phone_number);
-  						// writeFile(FILE * dbFile, char * msj.arguments);
+					// cout << "Searching for "<< phone_number << endl;
+					if(search(root, phone_number)) { // exist? 
+						cout << "This phone number is already written." <<endl;
+						memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
+						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+					}else {
+						insert(root, phone_number);
+						struct timeval tv;
+	    				gettimeofday(&tv,NULL);
+						string seconds = std::to_string(tv.tv_sec);
+						string useconds = std::to_string(tv.tv_usec);
+						string timestamp = seconds + ':' + useconds;
+						string message = "Vote registered, timestamp: " + timestamp;
+						char timeBuffer[64];
+						char confirm[message.size()+1];
+						strcpy(confirm, message.c_str());
+						// cout << "First vote! " << endl;
 						fflush(dbFile);
 	  					strcpy(timeBuffer,seconds.c_str());
 						fputs(timeBuffer,dbFile);
@@ -81,26 +94,15 @@ int main(int argc, char const *argv[]) {
 						fclose(dbFile);			
 						memcpy(m1.arguments, confirm, strlen(confirm)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						// cout << "Request answered successfully." <<endl;
-  					} else {
-						sort(phonebook.begin(), phonebook.end());
-						// cout << "Searching for "<< phone_number << endl;
-						if (binary_search(phonebook.begin(), phonebook.end(), phone_number)) {
-							exist = true;
-	  						// cout << "This phone number is already written." <<endl; 
-							memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
-							response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						} else {
-							exist = false;
-						}
-  					}
+						cout << "Request answered successfully." <<endl;
+					}
 					expected++;
 				}
 				break;
 
 			default:
-				continue;
 				// cout << "Server error: No such operationId: " << msj.operationId  << ", fowarding."<< endl;
+				continue;
 
 		} // end switch
 
@@ -108,3 +110,37 @@ int main(int argc, char const *argv[]) {
 
 	return 0;
 } // end main
+
+
+// TrieNode Structure Methods ----------------------
+
+struct TrieNode *getNode() {
+	struct TrieNode *pNode = new TrieNode;
+	pNode -> isWord = false;
+	for(int i = 0; i < PHONE_SIZE; i++) {
+		pNode -> children[i] = NULL;
+	}
+	return pNode;
+}
+
+void insert(struct TrieNode *root, string phone){
+	struct TrieNode *pCrawl = root;
+	for(int i = 0; i < phone.length(); i++) {
+		int index = phone[i] - '0';
+		if(!pCrawl -> children[index])
+			pCrawl -> children[index] = getNode();
+		pCrawl = pCrawl -> children[index];
+	}
+	pCrawl -> isWord = true;
+}
+
+bool search(struct TrieNode *root, string phone) {
+	struct TrieNode *searcher = root;
+	for(int i = 0; i < phone.length(); i++) {
+		int index = phone[i] - '0';
+		if(!searcher -> children[index])
+			return false;
+		searcher = searcher -> children[index];
+	}
+	return (searcher != NULL && searcher -> isWord);
+}

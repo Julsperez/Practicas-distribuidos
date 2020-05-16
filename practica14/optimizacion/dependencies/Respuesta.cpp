@@ -14,8 +14,8 @@ struct mensaje* Respuesta::getRequest() {
 	palabras = (struct mensaje*) paq.obtieneDatos();
 	palabras->puerto = paq.obtienePuerto();
 	memcpy(palabras->IP,paq.obtieneDireccion(),16);
-	cout << "Peticion de: "<< palabras->IP <<" puerto:" << palabras->puerto << " IdOp:" << palabras->operationId << endl;
-	cout << "Type: " << palabras->messageType << " Data: " <<  palabras->arguments << endl;
+	// cout << "Peticion de: "<< palabras->IP <<" puerto:" << palabras->puerto << " IdOp:" << palabras->operationId << endl;
+	// cout << "Type: " << palabras->messageType << " Data: " <<  palabras->arguments << endl;
 	return palabras;
 }
 
@@ -25,5 +25,5 @@ void Respuesta::sendReply(char * respuesta, char * ipCliente, int puertoCliente)
 	m1 = (struct mensaje *) respuesta;
 	PaqueteDatagrama paq((char*) m1, 100, ipCliente, puertoCliente);
 	socketlocal->envia(paq);
-	cout<<"\n--- Respuesta enviada ";
+	// cout<<"\n--- Respuesta enviada ";
 }
