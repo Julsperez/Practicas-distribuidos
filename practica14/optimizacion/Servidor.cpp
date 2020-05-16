@@ -67,7 +67,7 @@ int main(int argc, char const *argv[]) {
 
 					// cout << "Searching for "<< phone_number << endl;
 					if(search(root, phone_number)) { // exist? 
-						cout << "This phone number is already written." <<endl;
+						// cout << "This phone number is already written." <<endl;
 						memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
 					}else {
@@ -94,7 +94,7 @@ int main(int argc, char const *argv[]) {
 						fclose(dbFile);			
 						memcpy(m1.arguments, confirm, strlen(confirm)+1);
 						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						cout << "Request answered successfully." <<endl;
+						// cout << "Request answered successfully." <<endl;
 					}
 					expected++;
 				}
