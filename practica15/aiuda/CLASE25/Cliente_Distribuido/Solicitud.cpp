@@ -9,46 +9,48 @@ Solicitud::Solicitud(struct timeval timeout) {
 
 char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* arguments) {
 	struct mensaje msj;
+	char aux[100];
 	char* resultado;
 	int res;
-	char aux[100];
-	unsigned int id, registros = atoi(arguments);
-
-	cout << "Votes to send: " << registros << endl;
-	FILE *f = fopen("votes.txt", "r+");
+	unsigned int id, registros = atoi(arguments); // id de 0 a 65535
+	cout << "Registros " << registros << endl;
+	FILE *f = fopen("votos.txt", "r+");
 	if (f==NULL) {
-		cout << "Client error, no such file or directory" << endl;
+		cout << "Error al abrir el archivo votos.txt" << endl;
 		exit(-1);
 	}
-
 	id = 0;
 	for(int i=0;i<registros;i++){
 		msj.messageType = 0;
 		msj.requestId = id;
+		//id++;
 		memcpy(msj.IP, IP, 16);
 		msj.puerto = puerto;
 		msj.operationId = operationId;
-		fgets(msj.arguments, 4000, f);
-
-		cout<<"Arguments:" << msj.arguments;
-
+		//cout << "Id operacion: " << msj.operationId << endl;
+		//cout << "ip: " << msj.IP << endl;
+		fgets(msj.arguments, 100, f);
+		cout << msj.arguments;
+		//memcpy(msj.arguments, arguments, 4000);
+		//cout << "puerto: " << msj.puerto << endl;
+		//cout << "argumentos: " << msj.arguments << endl;
 		PaqueteDatagrama paq((char*) &msj, sizeof(msj), IP, puerto);
 		socketlocal->envia(paq);
 		PaqueteDatagrama paq1(sizeof(msj));
 		res = socketlocal->recibeTimeout(paq1,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
 		if(res>=0){
 			resultado  = paq1.obtieneDatos();
-			cout << resultado << endl;
+			cout << "resultado: " << resultado << endl;
 			id++;
 		} else {
-			// cout << "Server error, fowarding message..." << endl;
+			cout << "No se pudo conectar al servidor :(, reenviado paquete..." << endl;
 			while (1) {
 				PaqueteDatagrama paqReenvio((char*)&msj, sizeof(msj), IP, puerto);
 				socketlocal->envia(paqReenvio);
 				PaqueteDatagrama acuse(sizeof(msj));
 				res = socketlocal->recibeTimeout(acuse,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
 				if(res >0 ){
-					// cout << "Foward: " << acuse.obtieneDatos() << endl;
+					cout << "resultado: " << acuse.obtieneDatos() << endl;
 					break;
 				}
 			}

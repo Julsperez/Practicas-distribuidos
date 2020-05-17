@@ -1,20 +1,24 @@
 #include "SocketDatagrama.h"
 #include "Solicitud.h"
 #include "mensaje.h"
+#include <vector>
+#include <string>
 
 Solicitud::Solicitud(struct timeval timeout) {
 	timeoutSocket = timeout;
 	socketlocal = new SocketDatagrama(0,timeout);
 }
 
-char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* arguments) {
+char * Solicitud::doOperation(char* IP, int puerto, int operationId, vector<string> registros ) {
+// char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* arguments) {
 	struct mensaje msj;
 	char* resultado;
 	int res;
 	char aux[100];
-	unsigned int id, registros = atoi(arguments);
-
-	cout << "Votes to send: " << registros << endl;
+	unsigned int id; 
+	// unsigned int registros = atoi(arguments);
+	
+	// cout << "Votes to send: " << registros << endl;
 	FILE *f = fopen("votes.txt", "r+");
 	if (f==NULL) {
 		cout << "Client error, no such file or directory" << endl;
@@ -22,15 +26,26 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 	}
 
 	id = 0;
-	for(int i=0;i<registros;i++){
+	//for (int i = 0; i<len(registos); i++)
+	for(auto vote: registros){
+
+		char arguments[vote.size()+1];
+		strcpy(arguments, vote.c_str());
+
 		msj.messageType = 0;
 		msj.requestId = id;
 		memcpy(msj.IP, IP, 16);
 		msj.puerto = puerto;
 		msj.operationId = operationId;
-		fgets(msj.arguments, 4000, f);
+		// msj.arguments = arguments;
+		// fgets(msj.arguments, 100, f);
 
-		cout<<"Arguments:" << msj.arguments;
+		for (int i = 0; i < 4000; i++) {
+			msj.arguments[i] = arguments[i];
+
+		}
+		
+		// cout<<"Arguments:" << msj.arguments;
 
 		PaqueteDatagrama paq((char*) &msj, sizeof(msj), IP, puerto);
 		socketlocal->envia(paq);
@@ -38,7 +53,7 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 		res = socketlocal->recibeTimeout(paq1,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
 		if(res>=0){
 			resultado  = paq1.obtieneDatos();
-			cout << resultado << endl;
+			// cout << resultado << endl;
 			id++;
 		} else {
 			// cout << "Server error, fowarding message..." << endl;
