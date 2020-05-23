@@ -11,8 +11,8 @@ class Solicitud {
     
 public:
     Solicitud(struct timeval);
-    char * doOperation(char *IP, int puerto, int operationId, vector<string> votes );
-    // char * doOperation(char *IP, int puerto, int operationId, char *arguments);
+    // char * doOperation(char *IP, int puerto, int operationId, vector<string> votes );
+    char * doOperation(char *IP, int puerto, int operationId, char *arguments);
     
 private:
     SocketDatagrama *socketlocal;

@@ -1,4 +1,4 @@
-#include "Solicitud.h"
+#include "./dependencies/Solicitud.h"
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>

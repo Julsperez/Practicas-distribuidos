@@ -9,8 +9,8 @@ Solicitud::Solicitud(struct timeval timeout) {
 	socketlocal = new SocketDatagrama(0,timeout);
 }
 
-char * Solicitud::doOperation(char* IP, int puerto, int operationId, vector<string> registros ) {
-// char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* arguments) {
+// char * Solicitud::doOperation(char* IP, int puerto, int operationId, vector<string> registros ) {
+char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* arguments) {
 	struct mensaje msj;
 	char* resultado;
 	int res;
@@ -26,8 +26,8 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, vector<stri
 	}
 
 	id = 0;
-	//for (int i = 0; i<len(registos); i++)
-	for(auto vote: registros){
+	for (int i = 0; i<len(registos); i++)
+	// for(auto vote: registros){
 
 		char arguments[vote.size()+1];
 		strcpy(arguments, vote.c_str());
