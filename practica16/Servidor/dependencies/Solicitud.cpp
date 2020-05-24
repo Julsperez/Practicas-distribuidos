@@ -24,16 +24,15 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 	memcpy(msj.arguments, arguments, 4000); // arguments = voteBuffer = vote string
 
 	// send message
-	cout <<"[Debugger: msj.requestId]> "<< msj.requestId  <<endl;
+	// cout <<"[Debugger: msj.requestId]> "<< msj.requestId  <<endl;
 	PaqueteDatagrama paq((char*) &msj, sizeof(msj), IP, puerto);
 	socketlocal->envia(paq);
-	
 	PaqueteDatagrama paq1(sizeof(msj));
 	response = socketlocal->recibeTimeout(paq1,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
-	cout << "[Debugger: response]> "<< response <<endl;
+	// cout << "[Debugger: response]> "<< response <<endl;
 	if(response >= 0){
 		result  = paq1.obtieneDatos();
-		cout <<"Server result: " << result <<endl;
+		cout <<"Server response: " << result <<endl;
 	} else {
 		cout << "Could not connect, fowarding message..." << endl;
 		while (1) {
@@ -48,6 +47,6 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 		}
 	}
 	
-	cout<<"**Request done\n";
+	// cout<<"**Request done\n";
 	return result;
 }

@@ -14,8 +14,8 @@
 
 using namespace std;
 
-const char *ipServer1 = "127.0.0.1";
-const char *ipServer2 = "192.168.15.17";
+const char *ipServer2 = "127.0.0.1";
+const char *ipServer1 = "192.168.15.17";
 const int numServers = 2;
 const int PHONE_SIZE = 10;
 
@@ -34,10 +34,12 @@ bool search(struct TrieNode *, string);
 int main(int argc, char const *argv[]) {
 	bool exist = false;
 	char duplicated[] = "Vote duplicated, timestamp: 0:0";
-	char confirm[] = "fucking weirdo";
+	char confirm[] = "message resolved";
+	char threadconfirm[] = "THREAD RESPONSE";
 	int balance[numServers];
 	int serverIndex;
 	long int expected = 0;
+	int port = atoi(argv[1]);
 	long int prevId = -1;
 	struct TrieNode *root = getNode();
 	vector <string> record;
@@ -45,46 +47,61 @@ int main(int argc, char const *argv[]) {
 	struct timeval timeout;
 	timeout.tv_sec = 100;
 	timeout.tv_usec = 500000;
-	Respuesta response(atoi(argv[1]),timeout);
+	Respuesta response(port,timeout);
 
-	cout << "Loading configurations..."<<endl;
+	cout << "Configurations loaded..."<<endl;
 	for(int i=0; i < numServers; i++)
 		balance[i] = 0;
-	cout << "Server ready..." << endl;
+	cout << "server@" <<port << endl;
 
-	int i = 0, j = 0;
+	int i = 0, j = 0; // For debugging
 
 	while(1) {
 		struct mensaje msj;
 	 	struct mensaje m1;
+		//  cout << "\nListening new request..."<<endl;
 		cout << "\n------- New request "<<prevId+1<<"-------"<<endl; //for request: "<< prevId + 1 << endl;
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
-		// cout << "requestId: " << msj.requestId << endl;
-		// cout << "operationId: " << msj.operationId << endl;
+
+		record.push_back(msj.arguments);
+		string phone = record[0].substr(0, 10);
+		record.clear();
+
+		cout << "\n--------msj.data--------" <<endl;
+		cout << "messageType: " << msj.messageType << endl;
+		cout << "reqId: " << msj.requestId << endl;
+		cout << "coming ip: " << msj.IP << endl;
+		cout << "coming port: " << msj.puerto << endl;
+		cout << "opId: " << msj.operationId << endl;
+		cout << "message: " << msj.arguments << endl;
+		cout << "--end message data------\n" <<endl;
+
+
 		switch(msj.operationId) {
 			case 1:
-				cout << "Balanceador"<<endl;
+				cout << "Server balance" << endl;
 				if(msj.requestId > prevId){
-					record.push_back(msj.arguments);
-					string phone = record[0].substr(0, 10);
-					record.clear();
 					if((phone[9]-'0')%2!=0 || phone[0]=='0'){
-						cout<< "ipServer 1, no pair + 0: " <<phone<< endl;
 						i++;
-						// serverIndex = 0; // For server A
-						// thread thrx(sendServer, ipServer1, msj, response);
-						// thrx.join();
+						cout<< "not pair or 0: " <<phone<< endl;
+						cout << "Go to-> " << ipServer1 <<endl; 
+						thread thrx(sendServer, (char *)ipServer1, msj, response);
+						thrx.join();
+						cout<< "thread joint"<< endl;
 					} else {
 						cout<< "ipServer 2, pair: " <<phone<< endl;
 						j++;
-						// serverIndex = 1;
-						// thread thrx(sendServer, ipServer2, msj, response);
-						// thrx.join();
+						cout << "Go to-> " << ipServer2 <<endl; 
+						thread thrx(sendServer, (char *)ipServer2, msj, response);
+						thrx.join();
+						cout<< "thread joint"<< endl;
 					}
-					cout<< "[Counting balance]> ServA:"<< i << ": ServB:"<< j << endl;
+
+					cout<< "[Counting balance]> Serv1:"<< i << ": Serv2:"<< j << endl;
 					prevId = msj.requestId;
-					balance[serverIndex] += 1;
+					// balance[serverIndex] += 1;
+
 
 					m1.messageType = 1;
 					m1.puerto = msj.puerto;
@@ -103,23 +120,85 @@ int main(int argc, char const *argv[]) {
 
 			case 2:
 				cout << "Procesamiento"<<endl;
+
+
+				if(search(root, phone)) { // exist? 
+					// cout << "This phone number is already written." <<endl;
+					memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
+					response.sendReply((char*) m1.arguments, m1.IP, msj.puerto);
+				}else {
+					insert(root, phone);
+					struct timeval tv;
+					gettimeofday(&tv,NULL);
+					string seconds = std::to_string(tv.tv_sec);
+					string useconds = std::to_string(tv.tv_usec);
+					string timestamp = seconds + ':' + useconds;
+					string message = "Vote registered, timestamp: " + timestamp;
+					char timeBuffer[64];
+					char confirm[message.size()+1];
+					strcpy(confirm, message.c_str());
+					// cout << "First vote! " << endl;
+					fflush(dbFile);
+					strcpy(timeBuffer,seconds.c_str());
+					fputs(timeBuffer,dbFile);
+					strcpy(timeBuffer,useconds.c_str());
+					fputs(timeBuffer,dbFile);
+					fflush(dbFile);
+					fputs(" ",dbFile);
+					fputs(msj.arguments,dbFile);
+					fsync((long int)dbFile);
+					fclose(dbFile);			
+					memcpy(m1.arguments, confirm, strlen(confirm)+1);
+					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+					// cout << "Request answered successfully." <<endl;
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				// record.push_back(msj.arguments);
+				// string phone = record[0].substr(0, 10);
+				// record.clear();
+
+
+
+
 				// m1.messageType = 1;
-				// m1.puerto = msj.puerto;
+				// m1.puerto = 9001;
 				// m1.requestId = msj.requestId;
 				// memcpy(m1.IP, msj.IP, 16);
 
-				// if(msj.requestId == expected){
-  				// 	record.push_back(msj.arguments);
+				// memcpy(m1.arguments, threadconfirm, strlen(threadconfirm)+1);
+				// response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+
+
+
+
+				// 	record.push_back(msj.arguments);
   				// 	string phone_number = record[0].substr(0, 10);
 				// 	record.clear();
 
-				// 	// cout << "Searching for "<< phone_number << endl;
+
 				// 	if(search(root, phone_number)) { // exist? 
-				// 		// cout << "This phone number is already written." <<endl;
 				// 		memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
 				// 		response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
 				// 	}else {
 				// 		insert(root, phone_number);
+  				
+
+				//// if(msj.requestId == expected){
+				// 	// cout << "Searching for "<< phone_number << endl;
+				// 		// cout << "This phone number is already written." <<endl;
 				// 		struct timeval tv;
 	    		// 		gettimeofday(&tv,NULL);
 				// 		string seconds = std::to_string(tv.tv_sec);
@@ -163,35 +242,39 @@ int main(int argc, char const *argv[]) {
 
 // Threads Methods ----------------------
 
-/* void sendServer(char *ipAenviar, struct mensaje msj, Respuesta res){
+void sendServer(char *ipServer, struct mensaje msj, Respuesta res){
 	// cout << "[ Envio de la peticion al servidor ] " << indiceIPServidor <<endl;
+	cout << "...Inside thread... "<<endl;
 	struct timeval timeout;
   	timeout.tv_sec = 2;
   	timeout.tv_usec = 500000;
-	char *ip = ipAenviar;
-	int puerto = 9999;
+	char *ip = ipServer;
+	int puerto = 5001;
 	int operacion = 2;
 	Solicitud cliente = Solicitud(timeout);
-	char *respuesta = cliente.doOperation(ip, puerto, operacion, msj.arguments); // id missing
-	struct timeval tv;
-    gettimeofday(&tv,NULL);
-	string segundos = std::to_string(tv.tv_sec);
-	string microsec = std::to_string(tv.tv_usec);
-	char tmbuf[64];
-	char tmbuf2[64];
-	strcpy(tmbuf,segundos.c_str());
-	fflush(f);
-	strcpy(tmbuf2,microsec.c_str());
-	fflush(f);
-	struct mensaje m1;
-	memcpy(m1.arguments, respuesta, strlen(respuesta)+1);
-	m1.messageType = 1;
-	memcpy(m1.IP, msj.IP, 16);
-	m1.puerto = msj.puerto;
-	m1.requestId = msj.requestId;
-	cout << "[ Envio de la respuesta al cliente ] " <<endl;
-	res.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-} */
+	// respuesta = vote exist?
+	char *respuesta = cliente.doOperation(ip, puerto, operacion, msj.arguments, msj.requestId); 
+	// cout<<"Response: thread - " << respuesta <<endl;
+	
+	// struct timeval tv;
+    // gettimeofday(&tv,NULL);
+	// string segundos = std::to_string(tv.tv_sec);
+	// string microsec = std::to_string(tv.tv_usec);
+	// char tmbuf[64];
+	// char tmbuf2[64];
+	// strcpy(tmbuf,segundos.c_str());
+	// fflush(f);
+	// strcpy(tmbuf2,microsec.c_str());
+	// fflush(f);
+	// struct mensaje m1;
+	// memcpy(m1.arguments, respuesta, strlen(respuesta)+1);
+	// m1.messageType = 1;
+	// memcpy(m1.IP, msj.IP, 16);
+	// m1.puerto = msj.puerto;
+	// m1.requestId = msj.requestId;
+	// cout << "[ Envio de la respuesta al cliente ] " <<endl;
+	// res.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+}
 
 // TrieNode Structure Methods ----------------------
 

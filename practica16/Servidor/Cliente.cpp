@@ -26,7 +26,7 @@ int main(int argc, char*argv[]) {
 	timeout.tv_usec = 500000;
 
 	for(int i = 0; i < atoi(nVotes); i++) {
-		cout<<"--- new request: " << id << "---" << endl;
+		// cout<<"--- new request: " << id << "---" << endl;
 		fgets(bufferVote, 4000, votesFile); // take a vote from file
 		Solicitud client = Solicitud(timeout);
 		// should ip and port be constants?

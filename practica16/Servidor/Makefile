@@ -1,5 +1,5 @@
-Servidor: Servidor.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o
-	g++ -std=c++11 Servidor.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o -o Servidor -lpthread
+Servidor: Servidor.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o Solicitud.o
+	g++ -std=c++11 Servidor.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o  Solicitud.o -o Servidor -lpthread
 Cliente: Cliente.cpp Solicitud.o SocketDatagrama.o PaqueteDatagrama.o
 	g++ Cliente.cpp Solicitud.o SocketDatagrama.o PaqueteDatagrama.o -o Cliente
 Respuesta.o: ./dependencies/Respuesta.cpp ./dependencies/Respuesta.h
