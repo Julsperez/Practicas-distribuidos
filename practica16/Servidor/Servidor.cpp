@@ -104,9 +104,9 @@ int main(int argc, char const *argv[]) {
 
 
 					m1.messageType = 1;
-					m1.puerto = msj.puerto;
 					m1.requestId = msj.requestId;
 					memcpy(m1.IP, msj.IP, 16);
+					m1.puerto = msj.puerto;
 
 					memcpy(m1.arguments, confirm, strlen(confirm)+1);
 					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
