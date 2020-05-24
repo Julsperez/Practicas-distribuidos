@@ -15,7 +15,8 @@
 using namespace std;
 
 const char *ipServer2 = "127.0.0.1";
-const char *ipServer1 = "192.168.15.17";
+const char *ipServerB = "192.168.15.17";
+const char *ipServerA = "192.168.15.22";
 const int numServers = 2;
 const int PHONE_SIZE = 10;
 
@@ -49,9 +50,6 @@ int main(int argc, char const *argv[]) {
 	timeout.tv_usec = 500000;
 	Respuesta response(port,timeout);
 
-	cout << "Configurations loaded..."<<endl;
-	for(int i=0; i < numServers; i++)
-		balance[i] = 0;
 	cout << "server@" <<port << endl;
 
 	int i = 0, j = 0; // For debugging
@@ -60,7 +58,7 @@ int main(int argc, char const *argv[]) {
 		struct mensaje msj;
 	 	struct mensaje m1;
 		//  cout << "\nListening new request..."<<endl;
-		cout << "\n------- New request "<<prevId+1<<"-------"<<endl; //for request: "<< prevId + 1 << endl;
+		cout << "\n------- New request "<<prevId+1<<" -------"<<endl; //for request: "<< prevId + 1 << endl;
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
 
@@ -77,7 +75,6 @@ int main(int argc, char const *argv[]) {
 		cout << "message: " << msj.arguments << endl;
 		cout << "--end message data------\n" <<endl;
 
-
 		switch(msj.operationId) {
 			case 1:
 				cout << "Server balance" << endl;
@@ -85,32 +82,28 @@ int main(int argc, char const *argv[]) {
 					if((phone[9]-'0')%2!=0 || phone[0]=='0'){
 						i++;
 						cout<< "not pair or 0: " <<phone<< endl;
-						cout << "Go to-> " << ipServer1 <<endl; 
-						thread thrx(sendServer, (char *)ipServer1, msj, response);
+						cout << "Go to-> " << ipServerA <<endl; 
+						thread thrx(sendServer, (char *)ipServerA, msj, response);
 						thrx.join();
-						cout<< "thread joint"<< endl;
+						cout<< "thread end"<< endl;
 					} else {
 						cout<< "ipServer 2, pair: " <<phone<< endl;
 						j++;
-						cout << "Go to-> " << ipServer2 <<endl; 
-						thread thrx(sendServer, (char *)ipServer2, msj, response);
+						cout << "Go to-> " << ipServerB <<endl; 
+						thread thrx(sendServer, (char *)ipServerB, msj, response);
 						thrx.join();
-						cout<< "thread joint"<< endl;
+						cout<< "thread end"<< endl;
 					}
 
-					cout<< "[Counting balance]> Serv1:"<< i << ": Serv2:"<< j << endl;
+					cout<< "[Counting balance]> ServA:"<< i << ": ServB:"<< j << endl;
 					prevId = msj.requestId;
 					// balance[serverIndex] += 1;
-
 
 					m1.messageType = 1;
 					m1.requestId = msj.requestId;
 					memcpy(m1.IP, msj.IP, 16);
-					m1.puerto = msj.puerto;
-
 					memcpy(m1.arguments, confirm, strlen(confirm)+1);
 					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-					
 				}/* else if (msj.requestId == prevId){
 
 				} else {
@@ -124,30 +117,39 @@ int main(int argc, char const *argv[]) {
 
 				if(search(root, phone)) { // exist? 
 					// cout << "This phone number is already written." <<endl;
+					m1.messageType = 1;
+					m1.puerto = msj.puerto;
+					m1.requestId = msj.requestId;
+					memcpy(m1.IP, msj.IP, 16);
 					memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
 					response.sendReply((char*) m1.arguments, m1.IP, msj.puerto);
 				}else {
 					insert(root, phone);
-					struct timeval tv;
-					gettimeofday(&tv,NULL);
-					string seconds = std::to_string(tv.tv_sec);
-					string useconds = std::to_string(tv.tv_usec);
-					string timestamp = seconds + ':' + useconds;
-					string message = "Vote registered, timestamp: " + timestamp;
-					char timeBuffer[64];
-					char confirm[message.size()+1];
-					strcpy(confirm, message.c_str());
-					// cout << "First vote! " << endl;
-					fflush(dbFile);
-					strcpy(timeBuffer,seconds.c_str());
-					fputs(timeBuffer,dbFile);
-					strcpy(timeBuffer,useconds.c_str());
-					fputs(timeBuffer,dbFile);
-					fflush(dbFile);
-					fputs(" ",dbFile);
-					fputs(msj.arguments,dbFile);
-					fsync((long int)dbFile);
-					fclose(dbFile);			
+					cout << "after processing" <<endl;
+					// struct timeval tv;
+					// gettimeofday(&tv,NULL);
+					// string seconds = std::to_string(tv.tv_sec);
+					// string useconds = std::to_string(tv.tv_usec);
+					// string timestamp = seconds + ':' + useconds;
+					// string message = "Vote registered, timestamp: " + timestamp;
+					// char timeBuffer[64];
+					// char confirm[message.size()+1];
+					// strcpy(confirm, message.c_str());
+					// // cout << "First vote! " << endl;
+					// fflush(dbFile);
+					// strcpy(timeBuffer,seconds.c_str());
+					// fputs(timeBuffer,dbFile);
+					// strcpy(timeBuffer,useconds.c_str());
+					// fputs(timeBuffer,dbFile);
+					// fflush(dbFile);
+					// fputs(" ",dbFile);
+					// fputs(msj.arguments,dbFile);
+					// fsync((long int)dbFile);
+					// fclose(dbFile);			
+					m1.messageType = 1;
+					m1.puerto = msj.puerto;
+					m1.requestId = msj.requestId;
+					memcpy(m1.IP, msj.IP, 16);
 					memcpy(m1.arguments, confirm, strlen(confirm)+1);
 					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
 					// cout << "Request answered successfully." <<endl;
@@ -316,4 +318,3 @@ bool search(struct TrieNode *root, string phone) {
 	  	// if (dbFile == NULL) {
 	    // 	cout << "Server error: No such file or directory " << argv[2] << endl;
 	    // 	break;
-	  	// }

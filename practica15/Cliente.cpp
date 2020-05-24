@@ -78,7 +78,7 @@ void cliente_1(vector<string> votes) {
 }
 
 void cliente_2(vector<string> votes) {
-	char *ipServer_2 = "192.168.15.17" ;
+	char *ipServer_2 = "192.168.15.19" ;
 	int portServer_2 = 1996;
 	struct timeval timeout;
 	timeout.tv_sec = 2;
