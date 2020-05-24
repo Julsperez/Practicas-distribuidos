@@ -8,7 +8,6 @@ Respuesta::Respuesta(int pl, struct timeval timeout) {
 }
 
 struct mensaje* Respuesta::getRequest() {
-
 	PaqueteDatagrama paq(sizeof(mensaje));
 	socketlocal->recibeTimeout(paq,timeoutSocket.tv_sec,timeoutSocket.tv_usec);
 	palabras = (struct mensaje*) paq.obtieneDatos();

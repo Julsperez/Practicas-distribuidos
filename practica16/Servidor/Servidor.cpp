@@ -8,10 +8,15 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <vector>
+#include <thread>
 #include "./dependencies/Respuesta.h"
+#include "dependencies/Solicitud.h"
 
 using namespace std;
 
+const char *ipServer1 = "127.0.0.1";
+const char *ipServer2 = "192.168.15.17";
+const int numServers = 2;
 const int PHONE_SIZE = 10;
 
 struct TrieNode {
@@ -19,85 +24,114 @@ struct TrieNode {
 	bool isWord;
 };
 
+void sendServer(char *, struct mensaje, Respuesta);
+
 struct TrieNode *getNode();
 void insert(struct TrieNode *, string);
 bool search(struct TrieNode *, string);
 
-int main(int argc, char const *argv[]) {
-	char duplicated[] = "Vote duplicated, timestamp: 0:0";
-	long int expected = 0;
-	bool exist = false;
-	vector <string> record;
 
+int main(int argc, char const *argv[]) {
+	bool exist = false;
+	char duplicated[] = "Vote duplicated, timestamp: 0:0";
+	int balance[numServers];
+	int serverIndex;
+	long int expected = 0;
+	long int prevId = -1;
+	struct TrieNode *root = getNode();
+	vector <string> record;
+	
 	struct timeval timeout;
 	timeout.tv_sec = 100;
 	timeout.tv_usec = 500000;
-
-	struct TrieNode *root = getNode();
-
 	Respuesta response(atoi(argv[1]),timeout);
+
+	cout << "Loading configurations..."<<endl;
+	for(int i=0; i < numServers; i++)
+		balance[i] = 0;
+	cout << "\nServer ready...\n" << endl;
+
 
 	while(1) {
 		struct mensaje msj;
 	 	struct mensaje m1;
 
-	 	FILE *dbFile = NULL;
-	  	dbFile = fopen(argv[2], "a+");
-	  	if (dbFile == NULL) {
-	    	cout << "Server error: No such file or directory " << argv[2] << endl;
-	    	break;
-	  	}
-  
-		// cout << "\nListening: "<< expected << ":"<< endl;
+		cout << "\nWaiting for request: "<< prevId - 1 << endl;
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
 		// cout << "requestId: " << msj.requestId << endl;
-		// cout << "operationId: " << msj.operationId << endl;
+		cout << "operationId: " << msj.operationId << endl;
 		switch(msj.operationId) {
 			case 1:
-				m1.messageType = 1;
-				m1.puerto = msj.puerto;
-				m1.requestId = msj.requestId;
-				memcpy(m1.IP, msj.IP, 16);
-
-				if(msj.requestId == expected){
-  					record.push_back(msj.arguments);
-  					string phone_number = record[0].substr(0, 10);
+				cout << "Balanceador"<<endl;
+				if(msj.requestId > prevId){
+					record.push_back(msj.arguments);
+					string phone = record[0].substr(0, 10);
 					record.clear();
-
-					// cout << "Searching for "<< phone_number << endl;
-					if(search(root, phone_number)) { // exist? 
-						// cout << "This phone number is already written." <<endl;
-						memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
-						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-					}else {
-						insert(root, phone_number);
-						struct timeval tv;
-	    				gettimeofday(&tv,NULL);
-						string seconds = std::to_string(tv.tv_sec);
-						string useconds = std::to_string(tv.tv_usec);
-						string timestamp = seconds + ':' + useconds;
-						string message = "Vote registered, timestamp: " + timestamp;
-						char timeBuffer[64];
-						char confirm[message.size()+1];
-						strcpy(confirm, message.c_str());
-						// cout << "First vote! " << endl;
-						fflush(dbFile);
-	  					strcpy(timeBuffer,seconds.c_str());
-						fputs(timeBuffer,dbFile);
-						strcpy(timeBuffer,useconds.c_str());
-						fputs(timeBuffer,dbFile);
-						fflush(dbFile);
-						fputs(" ",dbFile);
-						fputs(msj.arguments,dbFile);
-						fsync((long int)dbFile);
-						fclose(dbFile);			
-						memcpy(m1.arguments, confirm, strlen(confirm)+1);
-						response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-						// cout << "Request answered successfully." <<endl;
+					if((phone[9]-'0')%2!=0 || phone[0]=='0'){
+						serverIndex = 0; // For server A
+						thread thrx(sendServer, ipServer1, msj, response);
+						thrx.join();
+					} else {
+						serverIndex = 1;
+						thread thrx(sendServer, ipServer2, msj, response);
+						thrx.join();
 					}
-					expected++;
+					prevId = msj.requestId;
+					balance[serverIndex] += 1;
+					
+				}else if (msj.requestId == prevId){
+
+				} else {
+
 				}
+				break;
+
+			case 2:
+				cout << "Procesamiento"<<endl;
+				// m1.messageType = 1;
+				// m1.puerto = msj.puerto;
+				// m1.requestId = msj.requestId;
+				// memcpy(m1.IP, msj.IP, 16);
+
+				// if(msj.requestId == expected){
+  				// 	record.push_back(msj.arguments);
+  				// 	string phone_number = record[0].substr(0, 10);
+				// 	record.clear();
+
+				// 	// cout << "Searching for "<< phone_number << endl;
+				// 	if(search(root, phone_number)) { // exist? 
+				// 		// cout << "This phone number is already written." <<endl;
+				// 		memcpy(m1.arguments, duplicated, strlen(duplicated)+1);
+				// 		response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+				// 	}else {
+				// 		insert(root, phone_number);
+				// 		struct timeval tv;
+	    		// 		gettimeofday(&tv,NULL);
+				// 		string seconds = std::to_string(tv.tv_sec);
+				// 		string useconds = std::to_string(tv.tv_usec);
+				// 		string timestamp = seconds + ':' + useconds;
+				// 		string message = "Vote registered, timestamp: " + timestamp;
+				// 		char timeBuffer[64];
+				// 		char confirm[message.size()+1];
+				// 		strcpy(confirm, message.c_str());
+				// 		// cout << "First vote! " << endl;
+				// 		fflush(dbFile);
+	  			// 		strcpy(timeBuffer,seconds.c_str());
+				// 		fputs(timeBuffer,dbFile);
+				// 		strcpy(timeBuffer,useconds.c_str());
+				// 		fputs(timeBuffer,dbFile);
+				// 		fflush(dbFile);
+				// 		fputs(" ",dbFile);
+				// 		fputs(msj.arguments,dbFile);
+				// 		fsync((long int)dbFile);
+				// 		fclose(dbFile);			
+				// 		memcpy(m1.arguments, confirm, strlen(confirm)+1);
+				// 		response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+				// 		// cout << "Request answered successfully." <<endl;
+				// 	}
+				// 	expected++;
+				// }
 				break;
 
 			default:
@@ -111,6 +145,39 @@ int main(int argc, char const *argv[]) {
 	return 0;
 } // end main
 
+
+
+// Threads Methods ----------------------
+
+void sendServer(char *ipAenviar, struct mensaje msj, Respuesta res){
+	// cout << "[ Envio de la peticion al servidor ] " << indiceIPServidor <<endl;
+	struct timeval timeout;
+  	timeout.tv_sec = 2;
+  	timeout.tv_usec = 500000;
+	char *ip = ipAenviar;
+	int puerto = 9999;
+	int operacion = 2;
+	Solicitud cliente = Solicitud(timeout);
+	char *respuesta = cliente.doOperation(ip, puerto, operacion, msj.arguments);
+	struct timeval tv;
+    gettimeofday(&tv,NULL);
+	string segundos = std::to_string(tv.tv_sec);
+	string microsec = std::to_string(tv.tv_usec);
+	char tmbuf[64];
+	char tmbuf2[64];
+	strcpy(tmbuf,segundos.c_str());
+	fflush(f);
+	strcpy(tmbuf2,microsec.c_str());
+	fflush(f);
+	struct mensaje m1;
+	memcpy(m1.arguments, respuesta, strlen(respuesta)+1);
+	m1.messageType = 1;
+	memcpy(m1.IP, msj.IP, 16);
+	m1.puerto = msj.puerto;
+	m1.requestId = msj.requestId;
+	cout << "[ Envio de la respuesta al cliente ] " <<endl;
+	res.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
+}
 
 // TrieNode Structure Methods ----------------------
 
@@ -144,3 +211,12 @@ bool search(struct TrieNode *root, string phone) {
 	}
 	return (searcher != NULL && searcher -> isWord);
 }
+
+
+
+// FILE *dbFile = NULL;
+	  	// dbFile = fopen(argv[2], "a+");
+	  	// if (dbFile == NULL) {
+	    // 	cout << "Server error: No such file or directory " << argv[2] << endl;
+	    // 	break;
+	  	// }

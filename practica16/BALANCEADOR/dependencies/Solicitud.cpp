@@ -11,7 +11,7 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 	struct mensaje msj;
 	char* resultado;
 	int res;
-	int numEnvios = 1
+	int numEnvios = 1;
 	int id = 0;
 	for(int i=0 ; i<numEnvios; i++){
 		cout<<"[ Comenzando el envio de paquete(s) ]"<<endl;
@@ -44,6 +44,6 @@ char * Solicitud::doOperation(char* IP, int puerto, int operationId, char* argum
 			id++;
 		}
 	}
-	cout<<"[ Envio completo ]"
+	cout<<"[ Envio completo ]";
 	return resultado;
 }

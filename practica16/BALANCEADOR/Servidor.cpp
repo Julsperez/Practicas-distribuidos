@@ -3,16 +3,16 @@
 #include <string>
 #include <stdlib.h>
 #include <sys/time.h>
-#include "Respuesta.h"
+#include "dependencies/Respuesta.h"
 #include <unistd.h>
 #include <thread>
-#include "Solicitud.h"
+#include "dependencies/Solicitud.h"
 
 #define numServidores 3
 using namespace std;
 
 void envioSolicitud(char *ipAenviar, struct mensaje msj, Respuesta res){
-	cout << "[ Envio de la peticion al servidor ] " <<indiceIPServidor <<endl;
+	// cout << "[ Envio de la peticion al servidor ] " <<indiceIPServidor <<endl;
 	struct timeval timeout;
   	timeout.tv_sec = 2;
   	timeout.tv_usec = 500000;
@@ -94,6 +94,7 @@ int main(int argc, char const *argv[]) {
 							const char *ipAenviar = "192.168.28.91";
 							break;
 					}
+
 					thread th1(envioSolicitud, ipAenviar, msj, respuesta);
 					th1.join();
 					idAnterior = msj.requestId;
