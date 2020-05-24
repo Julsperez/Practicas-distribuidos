@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="refresh" content="10" />
+    	<title>Visualizaci&oacute;n pantallas</title>
+    	<link rel="stylesheet" href="bulma.min.css">
+    	<link rel="stylesheet" href="style.css">
+    	<script defer src="all.js"></script>
+		<script src="jquery.min.js"></script>
+  	</head>
+  	<body onload="solicitarDominio()">
+  		<section class="hero is-medium fondoImagen">
+  			<div class="hero-head">
+    			<nav class="level">
+      				<div class="level-item has-text-centered">
+		    			<span class="navbar-item is-size-6 has-text-white has-text-right has-text-weight-semibold">
+            				D&nbsp;e&nbsp;s&nbsp;a&nbsp;r&nbsp;r&nbsp;o&nbsp;l&nbsp;l&nbsp;o&nbsp;&nbsp;d&nbsp;e&nbsp;&nbsp; S&nbsp;i&nbsp;s&nbsp;t&nbsp;e&nbsp;m&nbsp;a&nbsp;s&nbsp;&nbsp;D&nbsp;i&nbsp;s&nbsp;t&nbsp;r&nbsp;i&nbsp;b&nbsp;u&nbsp;i&nbsp;d&nbsp;o&nbsp;s
+            			</span>
+	    			</div>
+    			</nav>
+  			</div>
+	  		<div class="hero-body">
+	    		<div class="container has-text-centered">
+		    		<p class="in-left is-size-3 has-text-white is-uppercase" style="background: hsl(171, 100%, 41%); display: inline; border-radius: 5px; padding-left: 20px; padding-right: 20px;">
+		    			Visualizaci&oacute;n de los escritorios de las computadoras
+		    		</p><br>
+		    		<p class="in-left is-size-3 has-text-white is-uppercase" style="background: hsl(171, 100%, 41%); display: inline; border-radius: 5px; padding-left: 20px; padding-right: 20px;">
+		    			dentro de una red.
+		    		</p>
+	    		</div>
+	  		</div>	  		
+	  		<div class="hero-foot" style="margin-bottom: 5px;">
+	  			<p class="tag is-dark has-text-right is-italic is-pulled-right" style="margin-right: 5px;">
+	  				by Luis Manuel Figueroa Romero
+	  			</p>
+	  		</div>
+		</section>
+		<div class="box cta" style="margin-bottom: 0px;">
+			<div class="columns is-vcentered is-centered">
+				<div class="column is-3">
+					<p class="is-size-6 has-text-weight-semibold has-text-right">
+						Resoluci&oacute;n de las capturas:
+					</p>
+				</div>
+				<div class="column is-3">					
+					<div class="field">											  	
+						<div class="select is-primary is-fullwidth">
+							<select id="calidadCapturas">
+								<option value="100">Alta</option>
+								<option value="65">Media</option>
+								<option value="1">Baja</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="column is-3">
+					<button id="btnCalidad" class="button is-primary">Establecer</button>
+				</div>
+			</div>
+    	</div>
+    	<div><br>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image1" src="107.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+								<p class="is-size-6"><u><span class="dominio"></span>107</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image2" src="2.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>2</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image3" src="3.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>3</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image4" src="4.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>4</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image5" src="5.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>5</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image6" src="6.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>6</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image7" src="7.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>7</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image8" src="8.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>8</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image9" src="9.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>9</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image10" src="10.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>10</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image11" src="11.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>11</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image12" src="12.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>12</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image13" src="13.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>13</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image14" src="14.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>.14</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image15" src="15.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>15</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image16" src="16.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>16</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image17" src="17.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>17</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image18" src="18.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>18</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image19" src="19.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>19</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image20" src="20.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>20</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image21" src="21.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>21</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image22" src="22.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>22</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image23" src="23.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>23</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image24" src="24.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>24</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image25" src="25.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>25</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image26" src="26.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>26</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image27" src="27.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>27</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+		<section class="container">
+      		<div class="columns features">
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image28" src="28.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>28</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image29" src="29.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>29</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+        		<div class="column is-4">
+          			<div class="card is-shady">
+            			<div class="card-image">
+              				<figure class="image is-3by2">
+                				<img id="image30" src="30.jpg" class="modal-button" onerror="ocultarImagen(this)">
+              				</figure>
+            			</div>
+            			<div class="card-content">
+              				<div class="content has-text-centered">
+                				<h4 class="is-size-6">IP del ordenador:</h4>
+                				<p class="is-size-6"><u><span class="dominio"></span>30</u></p>
+                				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+              				</div>
+            			</div>
+          			</div>
+        		</div>
+      		</div>
+    	</section>
+    </div>
+  	</body>
+</html>
+<script>
+	$('#btnCalidad').click(function() {
+  		$.ajax({
+			type: "POST",
+			url: "/actualiza",
+			data:{
+				//query:$("#calidadCapturas").val()
+			},
+			success: function(data){}
+		});
+		
+	});
+	function solicitarDominio(){
+		$.ajax({
+			type: "POST",
+			url: "/dominio",
+			data:{},
+			success: function(data){
+				$(".dominio").text(data);
+			}
+		});
+	}
+	function ocultarImagen(imagen){
+		$("#"+imagen.id).parent().parent().parent().parent().css('display', 'none');
+	}
+</script>

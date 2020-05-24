@@ -100,9 +100,9 @@ void prueba2(int num){
 			dato= dato+c;
 
 			if(nn==33){
-				cad1= dato.substr(0,10);
-				cad2= dato.substr(11,19);
-				cad3= dato.substr(30,34);
+				cad1= dato.substr(0,10); //phone
+				cad2= dato.substr(11,19); // curp 
+				cad3= dato.substr(30,34); // partido
 				strcpy(cad11,cad1.c_str());
 				strcpy(cad12,cad2.c_str());
 				strcpy(cad13,cad3.c_str());
