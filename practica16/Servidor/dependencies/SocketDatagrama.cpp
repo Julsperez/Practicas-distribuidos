@@ -25,12 +25,13 @@ int SocketDatagrama::recibeTimeout(PaqueteDatagrama & p, time_t segundos, suseco
     int response = recvfrom(s,p.obtieneDatos(),p.obtieneLongitud(), 0, (struct sockaddr *) &direccionForanea, &addr_len);
     if (response < 0) {
         if (errno == EWOULDBLOCK)
-            fprintf(stderr, "Tiempo transcurrido\n");
+            fprintf(stderr, "Timeout...\n");
         else
             fprintf(stderr, "Internal socket error\n");
     }
-    /*cout << */p.inicializaPuerto(ntohs(direccionForanea.sin_port));
-    /*cout << */p.inicializaIp(inet_ntoa(direccionForanea.sin_addr));
+    /* cout <<  */p.inicializaPuerto(ntohs(direccionForanea.sin_port));
+    /* cout <<  */p.inicializaIp(inet_ntoa(direccionForanea.sin_addr));
+    cout <<"response: "<< response<< endl;
     return response;
 }
 

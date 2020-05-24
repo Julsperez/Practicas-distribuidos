@@ -34,6 +34,7 @@ bool search(struct TrieNode *, string);
 int main(int argc, char const *argv[]) {
 	bool exist = false;
 	char duplicated[] = "Vote duplicated, timestamp: 0:0";
+	char confirm[] = "fucking weirdo";
 	int balance[numServers];
 	int serverIndex;
 	long int expected = 0;
@@ -49,18 +50,18 @@ int main(int argc, char const *argv[]) {
 	cout << "Loading configurations..."<<endl;
 	for(int i=0; i < numServers; i++)
 		balance[i] = 0;
-	cout << "\nServer ready...\n" << endl;
+	cout << "Server ready..." << endl;
 
+	int i = 0, j = 0;
 
 	while(1) {
 		struct mensaje msj;
 	 	struct mensaje m1;
-
-		cout << "\nWaiting for request: "<< prevId - 1 << endl;
+		cout << "\n------- New request "<<prevId+1<<"-------"<<endl; //for request: "<< prevId + 1 << endl;
 		memcpy(&msj, response.getRequest(), sizeof(struct mensaje));
 
 		// cout << "requestId: " << msj.requestId << endl;
-		cout << "operationId: " << msj.operationId << endl;
+		// cout << "operationId: " << msj.operationId << endl;
 		switch(msj.operationId) {
 			case 1:
 				cout << "Balanceador"<<endl;
@@ -69,22 +70,35 @@ int main(int argc, char const *argv[]) {
 					string phone = record[0].substr(0, 10);
 					record.clear();
 					if((phone[9]-'0')%2!=0 || phone[0]=='0'){
-						serverIndex = 0; // For server A
-						thread thrx(sendServer, ipServer1, msj, response);
-						thrx.join();
+						cout<< "ipServer 1, no pair + 0: " <<phone<< endl;
+						i++;
+						// serverIndex = 0; // For server A
+						// thread thrx(sendServer, ipServer1, msj, response);
+						// thrx.join();
 					} else {
-						serverIndex = 1;
-						thread thrx(sendServer, ipServer2, msj, response);
-						thrx.join();
+						cout<< "ipServer 2, pair: " <<phone<< endl;
+						j++;
+						// serverIndex = 1;
+						// thread thrx(sendServer, ipServer2, msj, response);
+						// thrx.join();
 					}
+					cout<< "[Counting balance]> ServA:"<< i << ": ServB:"<< j << endl;
 					prevId = msj.requestId;
 					balance[serverIndex] += 1;
+
+					m1.messageType = 1;
+					m1.puerto = msj.puerto;
+					m1.requestId = msj.requestId;
+					memcpy(m1.IP, msj.IP, 16);
+
+					memcpy(m1.arguments, confirm, strlen(confirm)+1);
+					response.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
 					
-				}else if (msj.requestId == prevId){
+				}/* else if (msj.requestId == prevId){
 
 				} else {
 
-				}
+				} */
 				break;
 
 			case 2:
@@ -149,7 +163,7 @@ int main(int argc, char const *argv[]) {
 
 // Threads Methods ----------------------
 
-void sendServer(char *ipAenviar, struct mensaje msj, Respuesta res){
+/* void sendServer(char *ipAenviar, struct mensaje msj, Respuesta res){
 	// cout << "[ Envio de la peticion al servidor ] " << indiceIPServidor <<endl;
 	struct timeval timeout;
   	timeout.tv_sec = 2;
@@ -158,7 +172,7 @@ void sendServer(char *ipAenviar, struct mensaje msj, Respuesta res){
 	int puerto = 9999;
 	int operacion = 2;
 	Solicitud cliente = Solicitud(timeout);
-	char *respuesta = cliente.doOperation(ip, puerto, operacion, msj.arguments);
+	char *respuesta = cliente.doOperation(ip, puerto, operacion, msj.arguments); // id missing
 	struct timeval tv;
     gettimeofday(&tv,NULL);
 	string segundos = std::to_string(tv.tv_sec);
@@ -177,7 +191,7 @@ void sendServer(char *ipAenviar, struct mensaje msj, Respuesta res){
 	m1.requestId = msj.requestId;
 	cout << "[ Envio de la respuesta al cliente ] " <<endl;
 	res.sendReply((char*) m1.arguments,m1.IP, msj.puerto);
-}
+} */
 
 // TrieNode Structure Methods ----------------------
 

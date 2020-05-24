@@ -15,7 +15,7 @@ public:
     
 private:
     SocketDatagrama *socketlocal;
-    struct mensaje *palabras;
+    struct mensaje *message;
 	struct timeval timeoutSocket;
 };
 
