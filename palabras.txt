@@ -1,0 +1,120 @@
+Acoger--246--Recibir a una persona en casa
+Aguzar--149--Hacer que una cosa tenga punta
+Ahínco--99--Empeño muy fuerte que pone una persona en hacer una cosa
+Ajado--18--Salsa hecha con pan, ajo y sal
+Albor--522--Primera luz del dia, antes del amanecer
+Altivez--9--Sentimiento de superioridad
+Amasar--56--Presionar sustancias solidas hasta formar una masa homogenea
+Angulosas--402--Que forma ángulos o aristas
+Apropincuarse--565--Apropiarse de algo
+Aristócrata--433--Perosna que pertenece a la aristocracia
+Atenazando--284--Objeto sujetado fuertemente haciendo presion
+Avispado--238--Persona que es vivo y despierto para entender
+Bagatela--288--Cosa o asunto de poco valor
+Balbucear--124--Hablar con dificultad y sin sentido
+Biombo--207--Mueble formado por dos o más láminas verticales de tela u otro material
+Bochornoso--234--Que causa vergüenza y sonrojo.
+Buhardilla--197--Ventana que sobresale verticalmente en el tejado de una casa que sirve para dar luz o para salir al tejado
+Calderillo--36--Receta de comida
+Camarote--139--Habitación de una embarcación destinada a dormir
+Candor--273--Máxima blancura
+Caterva--593--Grupo grande de personas, animales o cosas que se consideran despreciables
+Caucho--294--Sustancia elástica, impermeable y resistente
+Charlar--37--Hablar con alguien de forma amena, obre temas sin trascendencia
+Cirio--26--Vela de cera larga y gruesa
+Clavicordio--240--Instrumento musical de cuerda y teclado, uno de los predecesores del piano de cola
+Coartada--165--Prueba que presenta un acusado en defensa de su inocencia
+Cobertizo--127--Cubierta que sobresale en un edificio u otra construcción destinada a dar sombra
+Coces--72--Coz, Movimiento violento hacia atrás hecho por un caballo con una o ambas patas traseras
+Cohibido--170--Que se cohibe y se muestra vergonzoso y tímido
+Cohombro--17--Planta variedad de pepino, de fruto largo y torcido
+Denostar--544--Injuriar a alguien de palabra
+Desazón--338--Estado de intranquilidad en que se encuentra una persona a causa de una alteración física o moral
+Deshilachado--148--Que tiene los bordes desgastados y con hilos sueltos
+Desvarío--8--Estado de alteración mental, generalmente provocado por una enfermedad
+Embuste--145--Mentira, en especial la que es muy grande o evidente
+Encasquetado--34--Desencajar encajar bien una prenda en la cabeza
+Enchiquerar--327--Encarcelar a una persona.
+Enclenque--414--Que es muy débil, enfermizo o delgado
+Ensimismado--35--Que dirige toda su atención a sus pensamientos aislándose de lo que lo rodea
+Ermitaño--515--Persona que vive en una ermita y cuida de ella
+Escrofuloso--423--De la escrófula o relacionado con ella
+Estro--548--Inspiración
+Estrujar--225--Apretar o retorcer con fuerza una cosa para extraer el jugo, líquido o sustancia que contiene
+Estupor--268--Asombro o sorpresa exagerada que impide a una persona hablar o reaccionar
+Evangelio--617--Libro del Nuevo Testamento que relata la vida y las enseñanzas de Jesús
+Exasperar--231--Provocar gran irritación o enfado
+Exequias--273--Ceremonias religiosas que se celebran por un difunto
+Extenuacion--493--Debilitación o cansancio extremos
+Extenuado--229--Que está muy cansado o débil, especialmente después de hacer un gran esfuerzo físico
+Extravagancia--79--Rasgo que caracteriza a una persona o cosa que es extravagante
+Extricar--579--En socorrismo y primeros auxilios, sacar a una persona atrapada que no puede liberarse por sí misma
+Febril--46--De la fiebre o relacionado con ella
+Fideicomiso--572--Disposición por la cual un testador deja su herencia
+Frac--18--Traje masculino de etiqueta compuesto de un saco con solapas de raso y tres botones que no se abrochan
+Fruncir--136--Arrugar la frente o las cejas, para mostrar enfado o preocupación
+Fútil--428--Que carece de importancia o interés por su falta de fundamento
+Gabán--83--Prenda gruesa de vestir de manga larga que cubre el cuerpo hasta debajo de la rodilla
+Granuja--203--Que es astuto y taimado, especialmente si utiliza artimañas para engañar o cometer delitos menores
+Harapo--9--Ropa o trozo de tela roto, sucio y muy gastado
+Hendidura--83--Abertura estrecha, alargada y poco profunda en una superficie
+Heno--19--Hierba segada y seca que se usa para alimento del ganado
+Higa--577--Gesto que se hace con el puño cerrado, sacando el pulgar por entre el índice y el medio
+Hipocondría--7--Trastorno mental que se caracteriza por una preocupación obsesiva por la salud y una tendencia a exagerar los sufrimientos
+Impetrar--599--Solicitar o rogar una cosa con ahínco
+Inane--566--Vano o inútil
+Ínfimo--242--Que es muy bajo en cantidad, calidad o importancia
+Ínfula--529--Adorno de lana blanca ceñido a la cabeza y con dos tiras colgantes a los lados
+Irascible--23--Que es propenso a irritarse
+Jactancias--351--Vanidad que muestra una persona que presume de sí misma y de sus cualidades
+Jadeante--70--Que jadea
+Joyel--533--Joya pequeña
+Kopex--13--Rublo, moneda Rusa de valor $0.31MXN
+Laso--585--Que no es o no está rizado
+Magnánimo--23--Que tiene noble temperamento y grandeza de espíritu y se comporta con generosidad
+Manubrio--588--Pieza mecánica con forma de ángulo recto, que, al darle movimiento, pone en funcionamiento un motor o mecanismo
+Martirizar--227--Matar o hacer sufrir a una persona por creer en una doctrina y defenderla
+Matiz--295--Variación leve de tono, grado de luminosidad que puede presentar un mismo color
+Mezquino--234--Verruga dolorosa que sale en las manos o en los pies
+Moribundo--212--Que se está muriendo o está muy cerca de la muerte
+Mutismo--179--Silencio voluntario o impuesto que tiene una persona o un grupo en un momento determinado
+Nanquin--18--Tela fina de algodón , de color amarillento, muy usada en el siglo XVIII
+Oropeles--216--Lámina fina de latón que imita al oro
+Pátina--594--Capa fina de óxido de color verdoso que se forma en el bronce y en otros metales a causa de la humedad
+Pendón--537--Bandera o estandarte, generalmente más largo que ancho
+Perspicaz--258--Que percibe detalles a mucha distancia
+Pesquisas--511--Investigación que se hace de una cosa para descubrir o averiguar algo
+Picaporte--224--Pieza larga de hierro para abrir o cerrar una puerta
+Pitillera--14--Estuche o caja para guardar cigarrillos
+Plastron--18--Corbata muy ancha que cubre el centro de la pechera de la camisa
+Precipitadamente--82--Que se hace o se dice de una manera demasiado rápida o con excesiva prisa
+Presuntuoso--168--Que muestra presunción, vanidad u orgullo
+Prorrumpio--489--Emitir gritos, suspiros, aplausos, carcajadas o sollozos de forma brusca
+Quemarropa--18--Que se dispara sobre un blanco apuntándolo desde muy cera
+Refunfuñar--90--Emitir sonidos no articulados o palabras murmuradas entre dientes en señal de enojo
+Rellano--10--Superficie horizontal y plana, mayor que el escalón, en que termina cada tramo de una escaler
+Rublos--13--Unidad monetaria de Rusia y de otros países de la antigua Unión Soviética
+Ruborizar--278--Causar sonrojo o rubor a una persona
+Samovares--221--Utensilio típico de Rusia para hervir agua y conservarla caliente para el té
+Satén--17--Tela brillante, tersa, ligera y suave que se hace con fibras de distinto tipo 
+Sopor--8--Estado intermedio entre el sueño y la vigilia en el que todavía no se ha perdido la conciencia
+Sosegado--21--Que está tranquilo y en sosiego
+Taberna--8--Establecimiento en el que se venden y consumen bebidas alcohólicas
+Tragaluz--197--Ventana abuhardillada en una cubierta o en una aguja de torre
+Transfigurar--237--Hacer cambiar el aspecto o la forma de una persona o una cosa
+Tugurio--183--Habitación, vivienda o establecimiento miserable y pequeño
+Turbacion--73--Estado de ánimo de la persona que no sabe qué hacer o decir
+Ultrajada--271--Herir u ofender de obra o de palabra
+Usurera--53--Persona que saca un beneficio o provecho muy alto en un asunto o negocio
+Vacilar--230--Moverse de un lado a otro por falta de estabilidad o equilibrio [varias definiciones]
+Vegetar--155--Desarrollarse, germinar, nutrirse, crecer y multiplicarse (plantas)
+Vehemencia--18--Cualidad de vehemente. (Que se manifiesta con ímpetu, viveza o pasión)
+Veneciano--253--Relativo a Venecia, región y ciudad del nordeste de Italia, o a sus habitantes
+Ventura--65--Estado de dicha o felicidad en que se encuentra una persona que ha conseguido sus deseos
+Vileza--234--Cualidad o condición de vil
+Vituperar--556--Censurar o desaprobar con mucha dureza una cosa o a una persona
+Voluptuosidad--352--Satisfacción o complacencia en el placer que proporcionan los sentidos
+Zancada--232--Paso largo
+Zarandear--239--Mover una cosa de un lado a otro con rapidez y energía
+Zumbando--320--Hacer una cosa ruido continuado y bronco
+Zurcir--208--Remendar tejido roto con puntadas juntas y entrecruzadas de manera que la unión se note lo menos posible

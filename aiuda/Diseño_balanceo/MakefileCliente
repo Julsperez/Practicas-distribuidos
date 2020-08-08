@@ -1,0 +1,8 @@
+clientes: Cliente.cpp PaqueteDatagrama.o SocketDatagrama.o Solicitud.o
+	g++  -std=c++11 Cliente.cpp PaqueteDatagrama.o SocketDatagrama.o Solicitud.o  -o cliente -lpthread 
+PaqueteDatagrama.o: PaqueteDatagrama.cpp  PaqueteDatagrama.h
+	g++ PaqueteDatagrama.cpp -c
+SocketDatagrama.o: SocketDatagrama.cpp SocketDatagrama.h
+	g++ SocketDatagrama.cpp -c
+Solicitud.o:Solicitud.cpp Solicitud.h
+	g++ Solicitud.cpp -c

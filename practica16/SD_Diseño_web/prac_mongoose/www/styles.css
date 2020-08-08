@@ -1,0 +1,27 @@
+h1{
+    color:white;
+}
+body{
+    background-color:#350042;
+}
+.block{
+    background-color:#3d1846;
+    padding:20px;
+    margin-left:25%;
+    margin-right:25%;
+    border-radius:10px;
+    color: white;
+}
+button{
+    background-color:#3d1846;
+    border:0;
+    padding:10px;
+    border-radius:10px;
+    color:rgb(94, 0, 157);
+}
+#search{
+    height:40px;
+    font-size:20px;
+    width:300px;
+    border-radius:10px;
+}
