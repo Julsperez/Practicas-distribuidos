@@ -10,8 +10,14 @@
 #include <unistd.h>
 #include <string>
 #include <ostream>
+<<<<<<< HEAD
 #include <thread>
 
+=======
+//================
+#include <thread>
+//===============
+>>>>>>> 9f9d6b25377d1e3505769e9f0634f7b9c717b114
 #define TAM_MAX_DATA 3500
 
 using namespace std;
@@ -30,7 +36,12 @@ static void handle_size(struct mg_connection *nc, struct http_message *hm) {
 			mg_send_head(nc,200,strlen(query), "Content-Type: text/plain");
 			mg_printf(nc, "%s", query);
 			banderaDominio = false;
+<<<<<<< HEAD
 		} else{
+=======
+		}
+		else{
+>>>>>>> 9f9d6b25377d1e3505769e9f0634f7b9c717b114
 			mg_get_http_var(&hm->body, "query", query, sizeof(query));
 			sprintf(query, "Longitud de la cadena = %d caracteres", (int)strlen(query));
 			printf("Cadena enviada: %s\n", query);
